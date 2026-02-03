@@ -6,7 +6,6 @@
     <title>Check Your Inbox! | THE ZONE BIO</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 50%, #0d1117 100%);
@@ -16,74 +15,74 @@
             align-items: center;
             justify-content: center;
         }
-        
         .container {
             max-width: 500px;
-            padding: 40px;
             text-align: center;
+            padding: 40px 20px;
         }
-        
         .success-icon {
             font-size: 80px;
             margin-bottom: 24px;
         }
-        
         h1 {
             font-size: 2rem;
             margin-bottom: 16px;
             color: #22c55e;
         }
-        
         p {
+            font-size: 1.1rem;
             color: #a0a0a0;
             margin-bottom: 24px;
             line-height: 1.6;
         }
-        
-        .note {
+        .next-steps {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .next-steps h3 {
+            color: #d4af37;
+            margin-bottom: 16px;
+        }
+        .next-steps li {
+            margin-bottom: 12px;
+            color: #ccc;
+        }
+        .premium-cta {
             background: rgba(212, 175, 55, 0.1);
             border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
         }
-        
-        .note h3 {
+        .premium-cta h3 {
             color: #d4af37;
-            font-size: 1rem;
             margin-bottom: 8px;
         }
-        
-        .note p {
-            font-size: 0.9rem;
-            margin-bottom: 12px;
+        .premium-cta p {
+            font-size: 0.95rem;
+            margin-bottom: 16px;
         }
-        
-        .cta-button {
+        .buy-button {
             display: inline-block;
-            background: linear-gradient(135deg, #d4af37 0%, #b8942d 100%);
+            background: #d4af37;
             color: #0a0f1a;
-            font-size: 1rem;
             font-weight: 700;
-            padding: 14px 32px;
+            padding: 14px 36px;
             border-radius: 50px;
             text-decoration: none;
             transition: transform 0.2s;
         }
-        
-        .cta-button:hover {
+        .buy-button:hover {
             transform: translateY(-2px);
         }
-        
-        .back-link {
-            display: block;
-            margin-top: 30px;
-            color: #666;
-            text-decoration: none;
+        .logo {
             font-size: 0.9rem;
-        }
-        
-        .back-link:hover {
+            font-weight: 700;
+            letter-spacing: 2px;
             color: #d4af37;
         }
     </style>
@@ -92,18 +91,24 @@
     <div class="container">
         <div class="success-icon">✅</div>
         <h1>You're In!</h1>
-        <p>The Flow State Guide is on its way to your inbox.<br>
-        Check your email (and spam folder, just in case).</p>
+        <p>Check your inbox — The Flow State Guide is on its way.<br>(Check spam if you don't see it in a few minutes.)</p>
         
-        <div class="note">
-            <h3>🍄 Want to go deeper?</h3>
-            <p>The Complete Edition includes advanced protocols, tracking templates, and private community access.</p>
-            <a href="https://paypal.me/thezonebio/9" class="cta-button" target="_blank">
-                Get Complete Edition — $9
-            </a>
+        <div class="next-steps">
+            <h3>While you wait:</h3>
+            <ul>
+                <li>📧 Add me@thezone.bio to your contacts</li>
+                <li>📖 Read the guide with a notebook nearby</li>
+                <li>⏰ Try the 90-minute Deep Work Protocol tomorrow</li>
+            </ul>
         </div>
         
-        <a href="/" class="back-link">← Back to homepage</a>
+        <div class="premium-cta">
+            <h3>Ready for the full system?</h3>
+            <p>The Complete Edition includes tracking templates, supplement timing calculator, and 90-day roadmap.</p>
+            <a href="https://paypal.me/thezonebio/9" class="buy-button" target="_blank">Get Complete Edition — $9 →</a>
+        </div>
+        
+        <div class="logo">THE ZONE BIO</div>
     </div>
 </body>
 </html>
