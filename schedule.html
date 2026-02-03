@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Focus Schedule Generator | THE ZONE BIO</title>
+    <meta name="description" content="Create your personalized deep work schedule in 60 seconds. Based on flow state research.">
+    <meta property="og:title" content="Your Personalized Focus Schedule">
+    <meta property="og:description" content="Create a science-backed deep work schedule tailored to YOUR brain. Free.">
+    <meta property="og:image" content="https://zoneprojectz.github.io/tzb-flow-guide/og-schedule.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #00d4ff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 2rem;
+        }
+        .step {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .step-number {
+            font-size: 0.75rem;
+            color: #7c3aed;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .step h2 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+        }
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+        .option {
+            padding: 16px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option:hover { border-color: rgba(124, 58, 237, 0.5); }
+        .option.selected {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.1);
+        }
+        .option-title { font-weight: 600; margin-bottom: 4px; }
+        .option-desc { font-size: 0.85rem; color: #888; }
+        .btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #7c3aed, #00d4ff);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.3);
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        #result {
+            display: none;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        .schedule-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .schedule-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+        .schedule-time {
+            font-size: 0.9rem;
+            color: #00d4ff;
+            font-weight: 600;
+            width: 100px;
+            flex-shrink: 0;
+        }
+        .schedule-activity {
+            flex: 1;
+        }
+        .schedule-activity strong { display: block; margin-bottom: 4px; }
+        .schedule-activity span { font-size: 0.85rem; color: #888; }
+        .tips-box {
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+        .tips-box h3 { margin-bottom: 12px; color: #7c3aed; }
+        .tips-box ul { margin-left: 20px; }
+        .tips-box li { margin-bottom: 8px; color: #ccc; }
+        .share-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 24px;
+        }
+        .share-box p { margin-bottom: 12px; }
+        .share-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #1da1f2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 4px;
+        }
+        .share-btn.copy { background: #333; }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(0, 212, 255, 0.2));
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 24px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        .cta-box h3 { margin-bottom: 12px; }
+        .cta-box p { color: #ccc; margin-bottom: 16px; }
+        .cta-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #7c3aed, #00d4ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .hidden { display: none; }
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        footer a { color: #7c3aed; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🍄</div>
+        <h1>Focus Schedule Generator</h1>
+        <p class="subtitle">Create your personalized deep work schedule in 60 seconds</p>
+
+        <div id="quiz">
+            <!-- Step 1: Chronotype -->
+            <div class="step" data-step="1">
+                <div class="step-number">Step 1 of 4</div>
+                <h2>When do you feel most mentally sharp?</h2>
+                <div class="options">
+                    <div class="option" data-value="early">
+                        <div class="option-title">🌅 Early Morning (5-9 AM)</div>
+                        <div class="option-desc">I'm an early bird — my best thinking happens at dawn</div>
+                    </div>
+                    <div class="option" data-value="morning">
+                        <div class="option-title">☀️ Late Morning (9 AM-12 PM)</div>
+                        <div class="option-desc">I need coffee first, but then I'm locked in</div>
+                    </div>
+                    <div class="option" data-value="afternoon">
+                        <div class="option-title">🌤️ Afternoon (12-5 PM)</div>
+                        <div class="option-desc">I warm up slowly and peak after lunch</div>
+                    </div>
+                    <div class="option" data-value="night">
+                        <div class="option-title">🌙 Evening/Night (5 PM+)</div>
+                        <div class="option-desc">Night owl — quiet hours are my superpower</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Work Style -->
+            <div class="step hidden" data-step="2">
+                <div class="step-number">Step 2 of 4</div>
+                <h2>How long can you focus before needing a break?</h2>
+                <div class="options">
+                    <div class="option" data-value="short">
+                        <div class="option-title">⚡ 25-30 minutes</div>
+                        <div class="option-desc">I work best in quick bursts (Pomodoro style)</div>
+                    </div>
+                    <div class="option" data-value="medium">
+                        <div class="option-title">🎯 45-60 minutes</div>
+                        <div class="option-desc">A good chunk, but I need regular resets</div>
+                    </div>
+                    <div class="option" data-value="long">
+                        <div class="option-title">🔥 90+ minutes</div>
+                        <div class="option-desc">Once I'm in the zone, don't interrupt me</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Priority -->
+            <div class="step hidden" data-step="3">
+                <div class="step-number">Step 3 of 4</div>
+                <h2>What's your main focus goal?</h2>
+                <div class="options">
+                    <div class="option" data-value="creative">
+                        <div class="option-title">🎨 Creative Work</div>
+                        <div class="option-desc">Writing, design, coding, content creation</div>
+                    </div>
+                    <div class="option" data-value="analytical">
+                        <div class="option-title">📊 Analytical Work</div>
+                        <div class="option-desc">Research, data, strategy, problem-solving</div>
+                    </div>
+                    <div class="option" data-value="learning">
+                        <div class="option-title">📚 Learning/Study</div>
+                        <div class="option-desc">Reading, courses, skill building</div>
+                    </div>
+                    <div class="option" data-value="mixed">
+                        <div class="option-title">🔄 Mixed Tasks</div>
+                        <div class="option-desc">Variety of work types throughout the day</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Schedule -->
+            <div class="step hidden" data-step="4">
+                <div class="step-number">Step 4 of 4</div>
+                <h2>How many deep work hours can you protect daily?</h2>
+                <div class="options">
+                    <div class="option" data-value="2">
+                        <div class="option-title">2 hours</div>
+                        <div class="option-desc">I have lots of meetings/obligations</div>
+                    </div>
+                    <div class="option" data-value="4">
+                        <div class="option-title">4 hours</div>
+                        <div class="option-desc">I can carve out a good chunk</div>
+                    </div>
+                    <div class="option" data-value="6">
+                        <div class="option-title">6+ hours</div>
+                        <div class="option-desc">I have significant control over my time</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" id="generateBtn" disabled>Select an option above</button>
+        </div>
+
+        <div id="result"></div>
+
+        <footer>
+            Made with 🍄 by <a href="https://zoneprojectz.github.io/tzb-flow-guide/">THE ZONE BIO</a><br>
+            <small>Focus is the new luxury.</small>
+        </footer>
+    </div>
+
+    <script>
+        const answers = {};
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                const step = this.closest('.step');
+                step.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const stepNum = parseInt(step.dataset.step);
+                answers[stepNum] = this.dataset.value;
+                
+                updateButton();
+            });
+        });
+
+        function updateButton() {
+            const btn = document.getElementById('generateBtn');
+            if (currentStep < totalSteps) {
+                btn.textContent = 'Next →';
+                btn.disabled = !answers[currentStep];
+            } else {
+                btn.textContent = '✨ Generate My Schedule';
+                btn.disabled = !answers[currentStep];
+            }
+        }
+
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            if (currentStep < totalSteps) {
+                document.querySelector(`[data-step="${currentStep}"]`).classList.add('hidden');
+                currentStep++;
+                document.querySelector(`[data-step="${currentStep}"]`).classList.remove('hidden');
+                updateButton();
+            } else {
+                generateSchedule();
+            }
+        });
+
+        function generateSchedule() {
+            const chronotype = answers[1];
+            const duration = answers[2];
+            const goal = answers[3];
+            const hours = answers[4];
+
+            // Generate schedule based on answers
+            const schedule = createSchedule(chronotype, duration, goal, hours);
+            
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').innerHTML = schedule;
+        }
+
+        function createSchedule(chronotype, duration, goal, hours) {
+            const timeMap = {
+                early: { start: '5:30 AM', peak: '6:00 AM' },
+                morning: { start: '8:30 AM', peak: '9:30 AM' },
+                afternoon: { start: '12:30 PM', peak: '2:00 PM' },
+                night: { start: '7:00 PM', peak: '9:00 PM' }
+            };
+
+            const durationMap = {
+                short: { work: 25, break: 5, label: '25/5' },
+                medium: { work: 50, break: 10, label: '50/10' },
+                long: { work: 90, break: 20, label: '90/20' }
+            };
+
+            const goalTips = {
+                creative: [
+                    'Start with "morning pages" — 10 min of stream-of-consciousness writing',
+                    'Keep your phone in another room during deep work',
+                    'Use ambient music without lyrics (try lo-fi or brown noise)'
+                ],
+                analytical: [
+                    'Begin with your hardest problem when mental energy is highest',
+                    'Keep a "parking lot" note for tangent ideas',
+                    'Review your progress at the end of each block'
+                ],
+                learning: [
+                    'Use active recall — test yourself instead of re-reading',
+                    'Take handwritten notes to boost retention',
+                    'Teach what you learn to solidify understanding'
+                ],
+                mixed: [
+                    'Batch similar tasks together',
+                    'Save admin/email for your low-energy times',
+                    'Plan tomorrow\'s priorities before ending today'
+                ]
+            };
+
+            const times = timeMap[chronotype];
+            const dur = durationMap[duration];
+            const tips = goalTips[goal];
+
+            let scheduleItems = '';
+            let currentTime = times.peak;
+            const blocks = Math.ceil(parseInt(hours) / (dur.work / 60));
+
+            // Pre-work ritual
+            scheduleItems += `
+                <div class="schedule-item">
+                    <div class="schedule-time">${times.start}</div>
+                    <div class="schedule-activity">
+                        <strong>🌅 Pre-Work Ritual</strong>
+                        <span>Hydrate, light movement, set intention for the day</span>
+                    </div>
+                </div>
+            `;
+
+            // Deep work blocks
+            for (let i = 0; i < Math.min(blocks, 4); i++) {
+                scheduleItems += `
+                    <div class="schedule-item">
+                        <div class="schedule-time">${getTimeSlot(times.peak, i * (dur.work + dur.break))}</div>
+                        <div class="schedule-activity">
+                            <strong>🔥 Deep Work Block ${i + 1}</strong>
+                            <span>${dur.work} minutes focused work → ${dur.break} min break</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Recovery
+            scheduleItems += `
+                <div class="schedule-item">
+                    <div class="schedule-time">${getTimeSlot(times.peak, blocks * (dur.work + dur.break))}</div>
+                    <div class="schedule-activity">
+                        <strong>🧘 Recovery</strong>
+                        <span>Walk, stretch, or healthy snack — no screens</span>
+                    </div>
+                </div>
+            `;
+
+            const profileName = getProfileName(chronotype, duration, goal);
+
+            return `
+                <div class="schedule-header">
+                    <h2>Your ${profileName} Schedule</h2>
+                    <p style="color: #888;">Optimized for ${hours} hours of deep work with ${dur.label} blocks</p>
+                </div>
+
+                ${scheduleItems}
+
+                <div class="tips-box">
+                    <h3>🎯 Tips for Your Work Style</h3>
+                    <ul>
+                        ${tips.map(t => `<li>${t}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="share-box">
+                    <p><strong>Share your focus profile!</strong></p>
+                    <a class="share-btn" href="https://twitter.com/intent/tweet?text=I'm%20a%20${encodeURIComponent(profileName)}%20🍄%0A%0AJust%20got%20my%20personalized%20deep%20work%20schedule.%20Get%20yours%20free:%0A&url=${encodeURIComponent('https://zoneprojectz.github.io/tzb-flow-guide/schedule.html')}" target="_blank">Share on Twitter</a>
+                    <button class="share-btn copy" onclick="copySchedule()">📋 Copy Schedule</button>
+                </div>
+
+                <div class="cta-box">
+                    <h3>📚 Want to Master Flow State?</h3>
+                    <p>This schedule is just the beginning. Learn the complete science of effortless focus.</p>
+                    <a class="cta-link" href="https://zoneprojectz.github.io/tzb-flow-guide/">Get the Flow State Guide →</a>
+                </div>
+            `;
+        }
+
+        function getTimeSlot(startTime, minutesOffset) {
+            const [time, period] = startTime.split(' ');
+            const [h, m] = time.split(':').map(Number);
+            let hours24 = period === 'PM' && h !== 12 ? h + 12 : h;
+            if (period === 'AM' && h === 12) hours24 = 0;
+            
+            let totalMinutes = hours24 * 60 + m + minutesOffset;
+            let newHours = Math.floor(totalMinutes / 60) % 24;
+            let newMinutes = totalMinutes % 60;
+            
+            const newPeriod = newHours >= 12 ? 'PM' : 'AM';
+            const displayHours = newHours > 12 ? newHours - 12 : (newHours === 0 ? 12 : newHours);
+            
+            return `${displayHours}:${newMinutes.toString().padStart(2, '0')} ${newPeriod}`;
+        }
+
+        function getProfileName(chronotype, duration, goal) {
+            const types = {
+                early: { short: 'Dawn Sprinter', medium: 'Early Architect', long: 'Morning Marathoner' },
+                morning: { short: 'Coffee Dasher', medium: 'Focus Builder', long: 'Deep Diver' },
+                afternoon: { short: 'Afternoon Spark', medium: 'Peak Performer', long: 'Flow Master' },
+                night: { short: 'Night Ninja', medium: 'Moonlight Worker', long: 'Night Owl Pro' }
+            };
+            return types[chronotype][duration];
+        }
+
+        function copySchedule() {
+            const result = document.getElementById('result');
+            const text = result.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Schedule copied! Paste it in your notes or calendar.');
+            });
+        }
+    </script>
+</body>
+</html>
