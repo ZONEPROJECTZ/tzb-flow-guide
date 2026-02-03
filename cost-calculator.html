@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Cost Calculator - How Much Is Distraction Costing You? | THE ZONE BIO</title>
+    <meta name="description" content="Calculate the real cost of distraction. Find out how much money unfocused work is costing you every year.">
+    <meta property="og:title" content="Focus Cost Calculator - THE ZONE BIO">
+    <meta property="og:description" content="Calculate how much money distraction is costing you every year.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+        }
+        
+        .calculator-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.75rem;
+        }
+        
+        .input-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .input-group .hint {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.75rem;
+        }
+        
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        input[type="number"], input[type="range"] {
+            width: 100%;
+        }
+        
+        input[type="number"] {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        input[type="number"]:focus {
+            border-color: #00ff88;
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            height: 8px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.5rem;
+        }
+        
+        .range-value {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ff88;
+            margin-top: 0.5rem;
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+            color: #000;
+            border: none;
+            padding: 1.25rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0,255,136,0.3);
+        }
+        
+        /* Results */
+        .results {
+            display: none;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, rgba(255,107,107,0.2) 0%, rgba(255,217,61,0.1) 100%);
+            border: 1px solid rgba(255,107,107,0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .result-card h2 {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        
+        .cost-amount {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cost-period {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.1rem;
+        }
+        
+        .breakdown {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .breakdown h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #ffd93d;
+        }
+        
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .breakdown-row:last-child {
+            border-bottom: none;
+            padding-top: 1rem;
+            font-weight: 700;
+        }
+        
+        .breakdown-row span:last-child {
+            color: #00ff88;
+        }
+        
+        .insight {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .insight h4 {
+            color: #00ff88;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+        
+        .insight p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,212,255,0.1) 100%);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .cta-section h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+            color: #000;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .share-section {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #1da1f2;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+        
+        footer a {
+            color: #00ff88;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💸 Focus Cost Calculator</h1>
+            <p class="subtitle">How much is distraction <em>actually</em> costing you?</p>
+        </header>
+        
+        <div class="calculator-card" id="calculator">
+            <div class="input-group">
+                <label>💰 Your hourly rate (or annual salary ÷ 2000)</label>
+                <p class="hint">What is one hour of your time worth?</p>
+                <div class="input-row">
+                    <span style="font-size: 1.5rem;">$</span>
+                    <input type="number" id="hourlyRate" placeholder="50" min="1" max="1000" value="50">
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label>⏰ Hours you work per week</label>
+                <input type="number" id="hoursPerWeek" placeholder="40" min="1" max="100" value="40">
+            </div>
+            
+            <div class="input-group">
+                <label>📱 How often are you distracted per hour?</label>
+                <p class="hint">Phone checks, notifications, random tabs, interruptions...</p>
+                <input type="range" id="distractions" min="1" max="20" value="8">
+                <div class="range-labels">
+                    <span>Rarely</span>
+                    <span>Constantly</span>
+                </div>
+                <div class="range-value"><span id="distractionsValue">8</span> times/hour</div>
+            </div>
+            
+            <div class="input-group">
+                <label>🧠 Average time to refocus after distraction</label>
+                <p class="hint">Research shows it takes 23 minutes on average to refocus after an interruption</p>
+                <input type="range" id="refocusTime" min="1" max="30" value="10">
+                <div class="range-labels">
+                    <span>Quick (1 min)</span>
+                    <span>Long (30 min)</span>
+                </div>
+                <div class="range-value"><span id="refocusValue">10</span> minutes</div>
+            </div>
+            
+            <button class="calculate-btn" onclick="calculate()">Calculate My Cost 💸</button>
+        </div>
+        
+        <div class="results" id="results">
+            <div class="result-card">
+                <h2>⚠️ Distraction is costing you</h2>
+                <div class="cost-amount" id="annualCost">$0</div>
+                <div class="cost-period">per year</div>
+            </div>
+            
+            <div class="breakdown">
+                <h3>📊 The Breakdown</h3>
+                <div class="breakdown-row">
+                    <span>Daily distractions</span>
+                    <span id="dailyDistractions">0</span>
+                </div>
+                <div class="breakdown-row">
+                    <span>Time lost per day</span>
+                    <span id="dailyTimeLost">0 hours</span>
+                </div>
+                <div class="breakdown-row">
+                    <span>Weekly cost</span>
+                    <span id="weeklyCost">$0</span>
+                </div>
+                <div class="breakdown-row">
+                    <span>Monthly cost</span>
+                    <span id="monthlyCost">$0</span>
+                </div>
+                <div class="breakdown-row">
+                    <span><strong>Annual cost</strong></span>
+                    <span id="annualCostRow">$0</span>
+                </div>
+            </div>
+            
+            <div class="insight">
+                <h4>💡 What This Means</h4>
+                <p id="insightText">Loading...</p>
+            </div>
+            
+            <div class="cta-section">
+                <h3>🎯 Ready to Reclaim Your Focus?</h3>
+                <p>The Flow State Guide teaches you how to eliminate distractions and enter deep work on demand.</p>
+                <a href="index.html" class="cta-btn">Get the Flow State Guide →</a>
+            </div>
+            
+            <div class="share-section">
+                <a href="#" class="share-btn" id="shareBtn">
+                    🐦 Share My Result
+                </a>
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>THE ZONE BIO</strong> — Focus is the new luxury.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="quiz.html">Focus Score Quiz</a> · 
+                <a href="timer.html">Flow Timer</a> · 
+                <a href="schedule.html">Schedule Generator</a>
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        // Update range displays
+        document.getElementById('distractions').addEventListener('input', function() {
+            document.getElementById('distractionsValue').textContent = this.value;
+        });
+        
+        document.getElementById('refocusTime').addEventListener('input', function() {
+            document.getElementById('refocusValue').textContent = this.value;
+        });
+        
+        function calculate() {
+            const hourlyRate = parseFloat(document.getElementById('hourlyRate').value) || 50;
+            const hoursPerWeek = parseFloat(document.getElementById('hoursPerWeek').value) || 40;
+            const distractionsPerHour = parseInt(document.getElementById('distractions').value) || 8;
+            const refocusMinutes = parseInt(document.getElementById('refocusTime').value) || 10;
+            
+            // Calculate
+            const hoursPerDay = hoursPerWeek / 5;
+            const dailyDistractions = distractionsPerHour * hoursPerDay;
+            
+            // Each distraction costs refocus time, but cap at available work hours
+            const potentialTimeLostMinutes = dailyDistractions * refocusMinutes;
+            const actualTimeLostMinutes = Math.min(potentialTimeLostMinutes, hoursPerDay * 60 * 0.8); // Cap at 80% of day
+            const dailyTimeLostHours = actualTimeLostMinutes / 60;
+            
+            const dailyCost = dailyTimeLostHours * hourlyRate;
+            const weeklyCost = dailyCost * 5;
+            const monthlyCost = weeklyCost * 4.33;
+            const annualCost = weeklyCost * 50; // 50 work weeks
+            
+            // Update display
+            document.getElementById('annualCost').textContent = formatCurrency(annualCost);
+            document.getElementById('dailyDistractions').textContent = dailyDistractions.toFixed(0);
+            document.getElementById('dailyTimeLost').textContent = dailyTimeLostHours.toFixed(1) + ' hours';
+            document.getElementById('weeklyCost').textContent = formatCurrency(weeklyCost);
+            document.getElementById('monthlyCost').textContent = formatCurrency(monthlyCost);
+            document.getElementById('annualCostRow').textContent = formatCurrency(annualCost);
+            
+            // Generate insight
+            let insight = '';
+            if (annualCost > 50000) {
+                insight = `That's like throwing away a luxury car every year. Or a down payment on a house every 2-3 years. The good news? Even a 30% improvement in focus would save you ${formatCurrency(annualCost * 0.3)} annually.`;
+            } else if (annualCost > 20000) {
+                insight = `You're losing the equivalent of a nice vacation every month. A 25% improvement in focus would be like giving yourself a ${formatCurrency(annualCost * 0.25)} raise — without working more hours.`;
+            } else if (annualCost > 10000) {
+                insight = `That's a new MacBook Pro every month going down the drain. The silver lining: focus is a skill that can be trained. Even small improvements compound over time.`;
+            } else {
+                insight = `While this might seem manageable, it adds up. Over a 30-year career, that's ${formatCurrency(annualCost * 30)} lost to distraction. Even a 20% improvement would save you ${formatCurrency(annualCost * 0.2 * 30)} over your career.`;
+            }
+            document.getElementById('insightText').textContent = insight;
+            
+            // Update share button
+            const tweetText = `😱 I just calculated that distraction is costing me ${formatCurrency(annualCost)}/year. How much are you losing? Find out:`;
+            const tweetUrl = encodeURIComponent('https://zoneprojectz.github.io/tzb-flow-guide/cost-calculator.html');
+            document.getElementById('shareBtn').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${tweetUrl}`;
+            
+            // Show results
+            document.getElementById('results').classList.add('show');
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function formatCurrency(amount) {
+            return '$' + Math.round(amount).toLocaleString();
+        }
+    </script>
+</body>
+</html>
