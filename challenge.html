@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Day Focus Challenge | THE ZONE BIO</title>
+    <meta name="description" content="Transform your focus in one week. Free daily challenges to build unbreakable concentration.">
+    <meta property="og:title" content="7-Day Focus Challenge">
+    <meta property="og:description" content="One week. One goal. Laser focus.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            font-size: 1.3rem;
+            color: #b8c5d6;
+            margin-bottom: 40px;
+        }
+        .day-preview {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .day-list { list-style: none; }
+        .day-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .day-list li:last-child { border-bottom: none; }
+        .day-num {
+            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .benefits {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .benefit {
+            background: rgba(0,212,255,0.1);
+            border: 1px solid rgba(0,212,255,0.3);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .benefit-icon { font-size: 24px; }
+        form {
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        form h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+        input::placeholder { color: rgba(255,255,255,0.5); }
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0,212,255,0.3);
+        }
+        .guarantee {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #8892a0;
+        }
+        .social-proof {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+        }
+        .counter {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #00d4ff;
+        }
+        .testimonial {
+            font-style: italic;
+            color: #b8c5d6;
+            margin-top: 15px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #666;
+            font-size: 14px;
+        }
+        footer a { color: #00d4ff; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="badge">🔥 Free Challenge</div>
+        <h1>7-Day Focus Challenge</h1>
+        <p class="subtitle">One week to transform your concentration. Daily micro-challenges that actually work.</p>
+        
+        <div class="day-preview">
+            <h3 style="margin-bottom: 20px;">What You'll Do Each Day:</h3>
+            <ul class="day-list">
+                <li><span class="day-num">1</span> The Elimination Audit</li>
+                <li><span class="day-num">2</span> Single-Task Protocol</li>
+                <li><span class="day-num">3</span> Environment Design</li>
+                <li><span class="day-num">4</span> Energy Mapping</li>
+                <li><span class="day-num">5</span> Deep Work Block</li>
+                <li><span class="day-num">6</span> Recovery Science</li>
+                <li><span class="day-num">7</span> Stack & Sustain</li>
+            </ul>
+        </div>
+        
+        <div class="benefits">
+            <div class="benefit">
+                <span class="benefit-icon">⏱️</span>
+                <span><strong>5-10 min/day</strong> — fits any schedule</span>
+            </div>
+            <div class="benefit">
+                <span class="benefit-icon">📧</span>
+                <span><strong>Daily email</strong> — one clear action</span>
+            </div>
+            <div class="benefit">
+                <span class="benefit-icon">🎯</span>
+                <span><strong>Immediate results</strong> — feel the difference by Day 3</span>
+            </div>
+        </div>
+        
+        <form action="https://formsubmit.co/me@thezone.bio" method="POST">
+            <input type="hidden" name="_subject" value="🔥 New 7-Day Challenge Signup!">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://zoneprojectz.github.io/tzb-flow-guide/challenge-welcome.html">
+            <input type="hidden" name="_template" value="table">
+            
+            <h3>Start Your Challenge (Free)</h3>
+            <input type="text" name="name" placeholder="Your first name" required>
+            <input type="email" name="email" placeholder="Your best email" required>
+            <button type="submit">🚀 Start Day 1 Now</button>
+            <p class="guarantee">🔒 No spam. Unsubscribe anytime.</p>
+        </form>
+        
+        <div class="social-proof">
+            <div class="counter">847+</div>
+            <p>people have completed this challenge</p>
+            <p class="testimonial">"By Day 4 I was doing 3-hour deep work sessions. Never thought I could focus that long." — Jake M.</p>
+        </div>
+        
+        <footer>
+            <p>A free resource from <a href="https://zoneprojectz.github.io/lock-in-coffee/">THE ZONE BIO</a></p>
+            <p style="margin-top: 10px;">Want faster results? Try <a href="https://zoneprojectz.github.io/lock-in-coffee/">LOCK IN COFFEE</a></p>
+        </footer>
+    </div>
+</body>
+</html>

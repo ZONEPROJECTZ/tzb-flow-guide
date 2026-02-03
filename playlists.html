@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Focus Playlists Guide | Curated Music for Deep Work</title>
+    <meta name="description" content="50+ scientifically-backed playlists for different focus states. Lo-fi, classical, ambient, binaural—all curated for productivity.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            color: #fff;
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+        .container { max-width: 700px; margin: 0 auto; padding: 50px 20px; }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #1DB954, #1ed760);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b8c5d6;
+            margin-bottom: 40px;
+        }
+        .price-box {
+            background: rgba(29, 185, 84, 0.1);
+            border: 2px solid #1DB954;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1DB954;
+        }
+        .price span { font-size: 1rem; color: #888; }
+        .category {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .category h3 {
+            color: #1DB954;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .playlist-list {
+            list-style: none;
+        }
+        .playlist-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .playlist-list li:last-child { border-bottom: none; }
+        .playlist-tag {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+        }
+        .why-box {
+            background: linear-gradient(135deg, rgba(29,185,84,0.1), rgba(255,255,255,0.05));
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+        .why-box h3 { margin-bottom: 20px; }
+        .why-box ul { list-style: none; }
+        .why-box li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .why-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #1DB954;
+            font-weight: bold;
+        }
+        .cta-section {
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .cta-section h2 { margin-bottom: 15px; }
+        .btn {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #1DB954, #1ed760);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(29,185,84,0.3);
+        }
+        .bonus {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 12px;
+        }
+        .bonus h4 { color: #ffd700; margin-bottom: 10px; }
+        .preview {
+            background: #121212;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        .preview h4 { color: #1DB954; margin-bottom: 15px; }
+        .preview-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 0;
+        }
+        .preview-img {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1DB954, #191414);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #666;
+            font-size: 14px;
+        }
+        footer a { color: #1DB954; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="badge">🎵 Instant Access</div>
+        <h1>The Focus Playlists Guide</h1>
+        <p class="subtitle">50+ curated playlists for every type of work. Never waste time finding the right music again.</p>
+        
+        <div class="price-box">
+            <div class="price">$3 <span>one-time</span></div>
+            <p style="color: #888; margin-top: 10px;">Lifetime access • Updated monthly</p>
+        </div>
+        
+        <h2 style="margin-bottom: 20px;">What's Inside:</h2>
+        
+        <div class="category">
+            <h3>🎹 Lo-Fi & Chill Beats</h3>
+            <ul class="playlist-list">
+                <li><span>lofi hip hop beats to study/relax to</span><span class="playlist-tag">10hr</span></li>
+                <li><span>Chillhop Essentials</span><span class="playlist-tag">5hr</span></li>
+                <li><span>Jazz Vibes</span><span class="playlist-tag">8hr</span></li>
+                <li><span>+ 8 more curated picks</span></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>🎻 Classical for Deep Work</h3>
+            <ul class="playlist-list">
+                <li><span>Baroque for Studying</span><span class="playlist-tag">4hr</span></li>
+                <li><span>Piano Focus</span><span class="playlist-tag">6hr</span></li>
+                <li><span>Minimalist Composers</span><span class="playlist-tag">3hr</span></li>
+                <li><span>+ 10 more curated picks</span></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>🌊 Ambient & Soundscapes</h3>
+            <ul class="playlist-list">
+                <li><span>Coffee Shop Sounds</span><span class="playlist-tag">ambient</span></li>
+                <li><span>Rain & Thunder</span><span class="playlist-tag">10hr</span></li>
+                <li><span>Forest Ambience</span><span class="playlist-tag">8hr</span></li>
+                <li><span>+ 7 more curated picks</span></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>🧠 Binaural & Focus Frequencies</h3>
+            <ul class="playlist-list">
+                <li><span>Alpha Waves (8-12 Hz)</span><span class="playlist-tag">focus</span></li>
+                <li><span>Beta Waves (12-30 Hz)</span><span class="playlist-tag">alertness</span></li>
+                <li><span>40 Hz Gamma (Flow State)</span><span class="playlist-tag">peak</span></li>
+                <li><span>+ 5 more curated picks</span></li>
+            </ul>
+        </div>
+        
+        <div class="category">
+            <h3>🎸 Energy & Motivation</h3>
+            <ul class="playlist-list">
+                <li><span>Instrumental Rock</span><span class="playlist-tag">high energy</span></li>
+                <li><span>Epic/Cinematic</span><span class="playlist-tag">motivation</span></li>
+                <li><span>Electronic Focus</span><span class="playlist-tag">coding</span></li>
+                <li><span>+ 6 more curated picks</span></li>
+            </ul>
+        </div>
+        
+        <div class="preview">
+            <h4>🎧 Preview: Top 3 Picks</h4>
+            <div class="preview-item">
+                <div class="preview-img">🎹</div>
+                <div>
+                    <strong>Deep Focus</strong><br>
+                    <span style="color: #888; font-size: 14px;">4.2M followers • Spotify Official</span>
+                </div>
+            </div>
+            <div class="preview-item">
+                <div class="preview-img">🌧️</div>
+                <div>
+                    <strong>Rainy Day Jazz</strong><br>
+                    <span style="color: #888; font-size: 14px;">850K followers • Cozy vibes</span>
+                </div>
+            </div>
+            <div class="preview-item">
+                <div class="preview-img">⚡</div>
+                <div>
+                    <strong>Brain Food</strong><br>
+                    <span style="color: #888; font-size: 14px;">2.1M followers • Electronic focus</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="why-box">
+            <h3>Why This Exists:</h3>
+            <ul>
+                <li>The wrong music kills focus (lyrics, sudden changes, wrong tempo)</li>
+                <li>Finding good playlists takes hours of trial and error</li>
+                <li>This guide = years of testing condensed into one list</li>
+                <li>Each playlist is matched to a specific work type</li>
+                <li>Updated monthly with new discoveries</li>
+            </ul>
+        </div>
+        
+        <div class="cta-section">
+            <h2>Get Instant Access</h2>
+            <p style="color: #b8c5d6;">50+ playlists • Organized by work type • Spotify links included</p>
+            <a href="https://www.paypal.com/paypalme/thezonebio/3" class="btn">Buy Now — $3</a>
+            
+            <div class="bonus">
+                <h4>🎁 Bonus: Focus Music Rules</h4>
+                <p style="font-size: 14px;">A 1-page guide on the science of music and focus. What tempo works, why lyrics hurt, and when to use silence.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>A micro-product from <a href="https://zoneprojectz.github.io/lock-in-coffee/">THE ZONE BIO</a></p>
+            <p style="margin-top: 10px;">Questions? me@thezone.bio</p>
+        </footer>
+    </div>
+</body>
+</html>
