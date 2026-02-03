@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Work Pre-Flight Checklist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            color: #8892b0;
+            font-size: 1.1rem;
+        }
+        
+        .checklist {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #00d9ff;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0,217,255,0.2);
+        }
+        
+        .item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .item:last-child {
+            border-bottom: none;
+        }
+        
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #00d9ff;
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .item-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .item-content p {
+            font-size: 0.85rem;
+            color: #8892b0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #8892b0;
+            font-size: 0.9rem;
+        }
+        
+        .footer a {
+            color: #00d9ff;
+            text-decoration: none;
+        }
+        
+        .print-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border: none;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,217,255,0.3);
+        }
+        
+        @media print {
+            body {
+                background: white;
+                color: black;
+                padding: 20px;
+            }
+            
+            .header h1 {
+                background: none;
+                -webkit-text-fill-color: #1a1a2e;
+                color: #1a1a2e;
+            }
+            
+            .header p, .item-content p {
+                color: #666;
+            }
+            
+            .checklist {
+                background: white;
+                border: 2px solid #1a1a2e;
+            }
+            
+            .section-title {
+                color: #1a1a2e;
+                border-bottom-color: #1a1a2e;
+            }
+            
+            .checkbox {
+                border-color: #1a1a2e;
+            }
+            
+            .print-btn, .footer {
+                display: none;
+            }
+            
+            .item {
+                border-bottom-color: #eee;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Deep Work Pre-Flight</h1>
+            <p>Complete this checklist before every focus session</p>
+        </div>
+        
+        <div class="checklist">
+            <div class="section">
+                <div class="section-title">🔇 Eliminate Interruptions</div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Phone on DND / Airplane Mode</h3>
+                        <p>Not just silent. Put it in another room if needed.</p>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Close All Unnecessary Tabs</h3>
+                        <p>Email, social, news—gone. Use a site blocker if needed.</p>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Disable Desktop Notifications</h3>
+                        <p>Slack, email, calendar—all of them off.</p>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Signal "Do Not Disturb"</h3>
+                        <p>Headphones on, door closed, sign up if needed.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🧠 Mental Clarity</div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Define ONE Clear Task</h3>
+                        <p>Write it down: "I will [specific action] for [X minutes]"</p>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Brain Dump Worries</h3>
+                        <p>Jot down anything nagging you. Deal with it later.</p>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Set Your Timer</h3>
+                        <p>25, 50, or 90 minutes. Commit to the block.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🏠 Environment</div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Water Bottle Filled</h3>
+                        <p>No excuse to leave your desk.</p>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Snacks Accessible</h3>
+                        <p>Prevent hunger-triggered kitchen trips.</p>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Bathroom Break Taken</h3>
+                        <p>Small thing, big impact on focus continuity.</p>
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <h3>Background Audio Ready</h3>
+                        <p>Music, white noise, or silence—have it queued.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="print-btn" onclick="window.print()">🖨️ Print This Checklist</button>
+        </div>
+        
+        <div class="footer">
+            <p>From <a href="https://zoneprojectz.github.io/tzb-flow-guide/">THE ZONE BIO</a> | Master Your Flow State</p>
+        </div>
+    </div>
+</body>
+</html>

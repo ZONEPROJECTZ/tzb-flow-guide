@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow State Triggers - Reference Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            color: #8892b0;
+            font-size: 1.1rem;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .card p {
+            font-size: 0.9rem;
+            color: #8892b0;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .card .action {
+            font-size: 0.85rem;
+            color: #ffd93d;
+            font-style: italic;
+        }
+        
+        /* Color themes for each card */
+        .card:nth-child(1) { border-top: 3px solid #ff6b6b; }
+        .card:nth-child(2) { border-top: 3px solid #ffd93d; }
+        .card:nth-child(3) { border-top: 3px solid #6bcb77; }
+        .card:nth-child(4) { border-top: 3px solid #4d96ff; }
+        .card:nth-child(5) { border-top: 3px solid #9b59b6; }
+        .card:nth-child(6) { border-top: 3px solid #e74c3c; }
+        .card:nth-child(7) { border-top: 3px solid #1abc9c; }
+        .card:nth-child(8) { border-top: 3px solid #f39c12; }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+        }
+        
+        .footer p {
+            color: #8892b0;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .footer a {
+            color: #4d96ff;
+            text-decoration: none;
+        }
+        
+        .print-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d);
+            border: none;
+            border-radius: 10px;
+            color: #0f0f23;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,107,107,0.3);
+        }
+        
+        @media print {
+            body {
+                background: white;
+                color: black;
+                padding: 10px;
+            }
+            
+            .header h1 {
+                background: none;
+                -webkit-text-fill-color: #333;
+                color: #333;
+            }
+            
+            .header p {
+                color: #666;
+            }
+            
+            .card {
+                background: #f9f9f9;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+            
+            .card h3 {
+                color: #333;
+            }
+            
+            .card p {
+                color: #666;
+            }
+            
+            .card .action {
+                color: #e67e22;
+            }
+            
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌊 Flow State Triggers</h1>
+            <p>The 8 conditions that unlock deep focus</p>
+        </div>
+        
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>Clear Goals</h3>
+                <p>Know exactly what you're trying to accomplish. Vague goals = wandering attention.</p>
+                <div class="action">→ Write your ONE task before starting</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Immediate Feedback</h3>
+                <p>See the results of your actions in real-time. Progress visibility sustains focus.</p>
+                <div class="action">→ Track progress visually as you work</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">⚖️</div>
+                <h3>Challenge-Skill Balance</h3>
+                <p>Task should stretch you (4% harder than comfortable). Too easy = boredom. Too hard = anxiety.</p>
+                <div class="action">→ Adjust difficulty to hit the sweet spot</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🔕</div>
+                <h3>Deep Focus</h3>
+                <p>Complete absorption in the task. No multitasking, no interruptions, no divided attention.</p>
+                <div class="action">→ Single-task with notifications off</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🧘</div>
+                <h3>Control</h3>
+                <p>Sense of autonomy over the activity. You choose what, when, and how.</p>
+                <div class="action">→ Work on YOUR terms, not reactions</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">💫</div>
+                <h3>Intrinsic Motivation</h3>
+                <p>The work itself is rewarding. Not just doing it for external rewards.</p>
+                <div class="action">→ Connect task to personal meaning</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🎲</div>
+                <h3>Risk & Novelty</h3>
+                <p>Some element of unpredictability or stakes. Keeps the brain engaged.</p>
+                <div class="action">→ Add constraints, deadlines, or challenges</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🏔️</div>
+                <h3>Rich Environment</h3>
+                <p>Surroundings that support focus: right lighting, temperature, minimal clutter.</p>
+                <div class="action">→ Design your workspace for flow</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Based on research by Mihaly Csikszentmihalyi and Steven Kotler</p>
+            <button class="print-btn" onclick="window.print()">🖨️ Print Reference Card</button>
+            <p style="margin-top: 20px;">
+                <a href="https://zoneprojectz.github.io/tzb-flow-guide/">Get the complete Flow State Guide →</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
