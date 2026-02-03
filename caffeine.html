@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caffeine Audit | Is Your Coffee Working Against You?</title>
+    <meta name="description" content="Discover if your caffeine habits are helping or hurting your focus. Get your personalized caffeine score.">
+    <meta property="og:title" content="Caffeine Audit - Is Your Coffee Working Against You?">
+    <meta property="og:description" content="Take the 2-minute caffeine audit. Find out if you're optimizing or sabotaging your focus.">
+    <meta property="og:image" content="https://zoneprojectz.github.io/tzb-flow-guide/caffeine-og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        .question-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .question-number {
+            font-size: 0.85rem;
+            color: #e94560;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        .option:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(5px);
+        }
+        .option.selected {
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.15);
+        }
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            transition: width 0.5s ease;
+            border-radius: 2px;
+        }
+        .hidden { display: none !important; }
+        
+        /* Results */
+        .result-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            position: relative;
+        }
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b, #ffc300);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+        .score-label {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #e94560;
+        }
+        .score-desc {
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        .issue-list {
+            text-align: left;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .issue-list h4 {
+            color: #e94560;
+            margin-bottom: 15px;
+        }
+        .issue-list li {
+            margin-bottom: 10px;
+            padding-left: 5px;
+            color: #ccc;
+        }
+        .solution-box {
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.2), rgba(255, 107, 107, 0.1));
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+        }
+        .solution-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        .solution-box p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .ingredient {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .ingredient:last-child { border-bottom: none; }
+        .ingredient-icon { font-size: 1.5rem; }
+        .ingredient-name { font-weight: 600; }
+        .ingredient-benefit { color: #a0a0a0; font-size: 0.9rem; }
+        
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+        .secondary-btn {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 14px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        .secondary-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .share-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .share-section p {
+            color: #a0a0a0;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 500px) {
+            h1 { font-size: 1.6rem; }
+            .question-text { font-size: 1.1rem; }
+            .container { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Intro -->
+        <div id="intro">
+            <h1>☕ Caffeine Audit</h1>
+            <p class="subtitle">Is your coffee helping or hurting your focus?</p>
+            
+            <div class="question-card">
+                <p style="color: #ccc; margin-bottom: 20px;">
+                    Most people drink coffee wrong. They spike their cortisol, crash by 2pm, 
+                    and wonder why they can't focus.
+                </p>
+                <p style="color: #ccc; margin-bottom: 25px;">
+                    This 2-minute audit reveals your <strong style="color: #e94560;">Caffeine Efficiency Score</strong> 
+                    and shows you what's actually happening when you drink coffee.
+                </p>
+                <button class="cta-btn" onclick="startQuiz()" style="width: 100%; border: none; cursor: pointer;">
+                    Start My Audit →
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz -->
+        <div id="quiz" class="hidden">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress" style="width: 0%"></div>
+            </div>
+            <div id="question-container"></div>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="hidden">
+            <div class="result-card">
+                <div class="score-circle" id="score-display">--</div>
+                <div class="score-label" id="score-title">Calculating...</div>
+                <p class="score-desc" id="score-description"></p>
+                
+                <div class="issue-list" id="issues-container">
+                    <h4>⚠️ Your Caffeine Issues:</h4>
+                    <ul id="issues-list"></ul>
+                </div>
+
+                <div class="solution-box">
+                    <h3>🍄 The Smarter Alternative</h3>
+                    <p>LOCK IN COFFEE combines adaptogens with caffeine for sustained focus without the crash:</p>
+                    
+                    <div class="ingredient">
+                        <span class="ingredient-icon">🦁</span>
+                        <div>
+                            <div class="ingredient-name">Lion's Mane</div>
+                            <div class="ingredient-benefit">Supports nerve growth & mental clarity</div>
+                        </div>
+                    </div>
+                    <div class="ingredient">
+                        <span class="ingredient-icon">🔥</span>
+                        <div>
+                            <div class="ingredient-name">Cordyceps</div>
+                            <div class="ingredient-benefit">Natural energy without jitters</div>
+                        </div>
+                    </div>
+                    <div class="ingredient">
+                        <span class="ingredient-icon">🧘</span>
+                        <div>
+                            <div class="ingredient-name">L-Theanine</div>
+                            <div class="ingredient-benefit">Calm focus, blocks caffeine anxiety</div>
+                        </div>
+                    </div>
+                    <div class="ingredient">
+                        <span class="ingredient-icon">❤️</span>
+                        <div>
+                            <div class="ingredient-name">Korean Red Ginseng</div>
+                            <div class="ingredient-benefit">Cortisol regulation, sustained energy</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://zoneprojectz.github.io/lock-in-coffee/" class="cta-btn">
+                    Get LOCK IN COFFEE →
+                </a>
+                
+                <div class="share-section">
+                    <p>Share your Caffeine Score:</p>
+                    <a href="#" id="share-twitter" class="secondary-btn" target="_blank">Share on Twitter</a>
+                    <a href="#" id="copy-result" class="secondary-btn" onclick="copyResult()">Copy Result</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                q: "When do you have your first coffee?",
+                options: [
+                    { text: "Within 30 minutes of waking", score: 0, issue: "Drinking coffee immediately spikes cortisol when it's already high" },
+                    { text: "30-90 minutes after waking", score: 3, issue: null },
+                    { text: "1-2 hours after waking", score: 5, issue: null },
+                    { text: "Whenever I feel like it", score: 1, issue: "Random timing prevents your body from building a healthy rhythm" }
+                ]
+            },
+            {
+                q: "How many cups do you drink per day?",
+                options: [
+                    { text: "1-2 cups", score: 5, issue: null },
+                    { text: "3-4 cups", score: 3, issue: "More than 3 cups can build tolerance, reducing effectiveness" },
+                    { text: "5+ cups", score: 0, issue: "High intake = high tolerance = diminishing returns" },
+                    { text: "I've lost count", score: 0, issue: "Excessive caffeine leads to adrenal fatigue" }
+                ]
+            },
+            {
+                q: "Do you experience an afternoon energy crash?",
+                options: [
+                    { text: "Almost every day", score: 0, issue: "Daily crashes indicate poor caffeine metabolism" },
+                    { text: "Sometimes", score: 2, issue: "Occasional crashes suggest room for optimization" },
+                    { text: "Rarely", score: 4, issue: null },
+                    { text: "Never", score: 5, issue: null }
+                ]
+            },
+            {
+                q: "When is your last caffeinated drink?",
+                options: [
+                    { text: "Before noon", score: 5, issue: null },
+                    { text: "Early afternoon (12-3pm)", score: 4, issue: null },
+                    { text: "Late afternoon (3-6pm)", score: 1, issue: "Late caffeine disrupts sleep architecture" },
+                    { text: "Evening or whenever", score: 0, issue: "Evening caffeine destroys deep sleep, even if you fall asleep" }
+                ]
+            },
+            {
+                q: "Do you get jitters or anxiety from coffee?",
+                options: [
+                    { text: "Frequently", score: 0, issue: "Jitters = too much caffeine, not enough L-theanine" },
+                    { text: "Sometimes", score: 2, issue: "Occasional anxiety suggests sensitivity or overconsumption" },
+                    { text: "Rarely", score: 4, issue: null },
+                    { text: "Never", score: 5, issue: null }
+                ]
+            },
+            {
+                q: "How would you describe your focus after coffee?",
+                options: [
+                    { text: "Sharp for 1-2 hours, then foggy", score: 1, issue: "Short focus windows indicate a crash pattern" },
+                    { text: "Scattered / hard to concentrate", score: 0, issue: "Caffeine without adaptogens can worsen scattered thinking" },
+                    { text: "Steady for 3-4 hours", score: 4, issue: null },
+                    { text: "Sustained all morning", score: 5, issue: null }
+                ]
+            },
+            {
+                q: "Do you need coffee to function in the morning?",
+                options: [
+                    { text: "Can't start without it", score: 0, issue: "Dependency = you've built tolerance and need a reset" },
+                    { text: "Helps a lot", score: 2, issue: "Moderate dependency suggests optimization opportunity" },
+                    { text: "Nice to have", score: 4, issue: null },
+                    { text: "Optional, I function fine without", score: 5, issue: null }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+        let totalScore = 0;
+        let issues = [];
+
+        function startQuiz() {
+            document.getElementById('intro').classList.add('hidden');
+            document.getElementById('quiz').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+
+            const container = document.getElementById('question-container');
+            container.innerHTML = `
+                <div class="question-card">
+                    <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
+                    <div class="question-text">${q.q}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option" onclick="selectOption(${i})">${opt.text}</div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(index) {
+            const q = questions[currentQuestion];
+            const selected = q.options[index];
+            
+            totalScore += selected.score;
+            if (selected.issue) {
+                issues.push(selected.issue);
+            }
+            answers.push(index);
+
+            // Visual feedback
+            document.querySelectorAll('.option')[index].classList.add('selected');
+            
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    showQuestion();
+                } else {
+                    showResults();
+                }
+            }, 400);
+        }
+
+        function showResults() {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            
+            const maxScore = questions.length * 5;
+            const percentage = Math.round((totalScore / maxScore) * 100);
+            
+            document.getElementById('score-display').textContent = percentage;
+            
+            let title, description;
+            if (percentage >= 80) {
+                title = "☀️ Caffeine Optimized";
+                description = "Great job! Your caffeine habits are well-optimized. You're in the top 15% of coffee drinkers. Consider functional coffee to push even further.";
+            } else if (percentage >= 60) {
+                title = "🌤️ Room to Improve";
+                description = "You're doing okay, but leaving performance on the table. A few tweaks could unlock significantly better focus.";
+            } else if (percentage >= 40) {
+                title = "⛅ Caffeine Suboptimal";
+                description = "Your coffee habits are working against you more than helping. You're getting diminishing returns and likely experiencing crashes.";
+            } else {
+                title = "🌧️ Caffeine Sabotage";
+                description = "Your current caffeine routine is actively hurting your focus and energy. Time for a complete reset.";
+            }
+            
+            document.getElementById('score-title').textContent = title;
+            document.getElementById('score-description').textContent = description;
+            
+            // Show issues
+            const issuesList = document.getElementById('issues-list');
+            if (issues.length > 0) {
+                issuesList.innerHTML = issues.map(i => `<li>${i}</li>`).join('');
+            } else {
+                document.getElementById('issues-container').classList.add('hidden');
+            }
+            
+            // Setup share
+            const shareText = `My Caffeine Efficiency Score: ${percentage}%\n\n${issues.length > 0 ? `Found ${issues.length} issues with my coffee habits.` : 'My coffee game is optimized!'}\n\nTake the audit:`;
+            const shareUrl = 'https://zoneprojectz.github.io/tzb-flow-guide/caffeine.html';
+            document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+        }
+
+        function copyResult() {
+            const maxScore = questions.length * 5;
+            const percentage = Math.round((totalScore / maxScore) * 100);
+            const text = `☕ My Caffeine Efficiency Score: ${percentage}%\n\nTake yours: https://zoneprojectz.github.io/tzb-flow-guide/caffeine.html`;
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('copy-result').textContent = 'Copied!';
+                setTimeout(() => {
+                    document.getElementById('copy-result').textContent = 'Copy Result';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
