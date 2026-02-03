@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Science of Flow State | Free Guide</title>
+    <meta name="description" content="Master the 4 conditions for effortless focus. Free PDF guide from THE ZONE BIO.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Science of Flow State | Free Guide">
+    <meta property="og:description" content="Master the 4 conditions for effortless focus. No willpower required.">
+    <meta property="og:type" content="website">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 50%, #0d1117 100%);
+            color: #e6e6e6;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: #d4af37;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        h1 span {
+            color: #d4af37;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+        }
+        
+        .features {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .feature:last-child { margin-bottom: 0; }
+        
+        .feature-icon {
+            font-size: 24px;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .feature-text h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .feature-text p {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .email-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .email-input {
+            padding: 16px 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .email-input:focus {
+            border-color: #d4af37;
+        }
+        
+        .email-input::placeholder {
+            color: #666;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37 0%, #b8942d 100%);
+            color: #0a0f1a;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 18px 48px;
+            border-radius: 50px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(212, 175, 55, 0.4);
+        }
+        
+        .cta-note {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .success-message {
+            display: none;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        .success-message h3 {
+            color: #22c55e;
+            margin-bottom: 8px;
+        }
+        
+        .download-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #d4af37;
+            text-decoration: underline;
+        }
+        
+        .quote {
+            margin-top: 60px;
+            padding: 30px;
+            border-left: 3px solid #d4af37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        .quote p {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #c0c0c0;
+        }
+        
+        .quote cite {
+            display: block;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #888;
+            font-style: normal;
+        }
+        
+        footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #d4af37;
+            margin-bottom: 8px;
+        }
+        
+        .tagline {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .container { padding: 30px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="badge">Free PDF Guide</span>
+        
+        <h1>The Science of <span>Flow State</span></h1>
+        
+        <p class="subtitle">Master the 4 conditions for effortless focus. No willpower required.</p>
+        
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">🧠</span>
+                <div class="feature-text">
+                    <h3>The 4 Conditions for Flow</h3>
+                    <p>Based on decades of research by Csikszentmihalyi</p>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <span class="feature-icon">⏰</span>
+                <div class="feature-text">
+                    <h3>90-Minute Deep Work Protocol</h3>
+                    <p>Step-by-step framework for maximum focus</p>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <span class="feature-icon">🍄</span>
+                <div class="feature-text">
+                    <h3>Nutrition for Focus</h3>
+                    <p>Lion's Mane, L-Theanine, and timing strategies</p>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <span class="feature-icon">📅</span>
+                <div class="feature-text">
+                    <h3>30-Day Flow Challenge</h3>
+                    <p>Build lasting habits, not temporary motivation</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <form class="email-form" id="downloadForm">
+                <input type="email" class="email-input" placeholder="your@email.com" required id="emailInput">
+                <button type="submit" class="cta-button">
+                    Get the Free Guide →
+                </button>
+            </form>
+            <p class="cta-note">We'll send the PDF to your inbox. No spam, ever.</p>
+            
+            <div class="success-message" id="successMessage">
+                <h3>✅ Check your inbox!</h3>
+                <p>The Flow State Guide is on its way to your email.</p>
+                <a href="#" class="download-link" id="directDownload">Or download directly here →</a>
+            </div>
+        </div>
+        
+        <div class="quote">
+            <p>"Flow is not about trying harder. It's about creating the conditions where effort becomes effortless."</p>
+            <cite>— THE ZONE BIO</cite>
+        </div>
+        
+        <footer>
+            <div class="logo">THE ZONE BIO</div>
+            <div class="tagline">Focus is the new luxury.</div>
+        </footer>
+    </div>
+    
+    <script>
+        // Simple form handler - stores emails in localStorage for now
+        // Replace with actual form service (Formspree, ConvertKit, etc.)
+        document.getElementById('downloadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            
+            // Store locally (for demo - replace with real service)
+            const emails = JSON.parse(localStorage.getItem('tzb_signups') || '[]');
+            emails.push({ email, date: new Date().toISOString() });
+            localStorage.setItem('tzb_signups', JSON.stringify(emails));
+            
+            // Show success
+            document.getElementById('downloadForm').style.display = 'none';
+            document.querySelector('.cta-note').style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            
+            // Console log for now - remove in production
+            console.log('Signup:', email);
+        });
+    </script>
+</body>
+</html>
