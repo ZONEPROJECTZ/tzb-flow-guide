@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You! Download Your Guide - THE ZONE BIO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: bounce 0.6s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .message {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        
+        .download-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .download-card h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+            color: #000;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0,255,136,0.3);
+        }
+        
+        .download-btn.secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        
+        .download-btn.secondary:hover {
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 10px 40px rgba(255,255,255,0.1);
+        }
+        
+        .instructions {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: left;
+            margin: 2rem 0;
+        }
+        
+        .instructions h3 {
+            font-size: 1rem;
+            color: #00ff88;
+            margin-bottom: 1rem;
+        }
+        
+        .instructions ol {
+            margin-left: 1.25rem;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .bonus {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,100,0,0.1) 100%);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 16px;
+        }
+        
+        .bonus h3 {
+            color: #ffd700;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 1rem;
+        }
+        
+        .bonus p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1rem;
+        }
+        
+        .footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+        
+        .footer a {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .support {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .support a {
+            color: #00d4ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">🎉</div>
+        
+        <h1>Thank You!</h1>
+        
+        <p class="message">
+            Your payment was successful. Welcome to the focus revolution.<br>
+            Here's everything you need to get started.
+        </p>
+        
+        <div class="download-card">
+            <h2>📖 The Flow State Guide</h2>
+            <p style="color: rgba(255,255,255,0.6); margin-bottom: 1.5rem;">
+                Click below to download your guide. Save it and use it daily.
+            </p>
+            
+            <a href="download.html" class="download-btn" target="_blank">
+                📄 View & Save as PDF
+            </a>
+        </div>
+        
+        <div class="instructions">
+            <h3>💡 How to Save as PDF</h3>
+            <ol>
+                <li>Click the download button above</li>
+                <li>When the guide opens, click <strong>"Save as PDF"</strong> button (bottom right)</li>
+                <li>Or press <strong>Ctrl+P / Cmd+P</strong> and select "Save as PDF"</li>
+                <li>Save to your device and enjoy!</li>
+            </ol>
+        </div>
+        
+        <div class="bonus">
+            <h3>🎁 Bonus: Quick Start</h3>
+            <p>Tomorrow morning, try this:</p>
+            <ol style="margin-left: 1.25rem; color: rgba(255,255,255,0.8); text-align: left;">
+                <li>Wake up, drink water, skip checking your phone</li>
+                <li>Write ONE specific task you'll complete</li>
+                <li>Set a 90-minute timer</li>
+                <li>Work until it rings. That's it.</li>
+            </ol>
+            <p style="margin-top: 1rem; font-style: italic;">
+                You'll experience flow. Maybe for the first time in years.
+            </p>
+        </div>
+        
+        <div class="support">
+            Questions? Need help? Email us at <a href="mailto:me@thezone.bio">me@thezone.bio</a>
+        </div>
+        
+        <div class="footer">
+            <p><strong>THE ZONE BIO</strong> — Focus is the new luxury.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://thezone.bio">thezone.bio</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
