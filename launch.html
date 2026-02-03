@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Launch Command Center - THE ZONE BIO</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid #333;
+            margin-bottom: 30px;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .subtitle { color: #888; font-size: 1.1em; }
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .status-item {
+            background: #1a1a2e;
+            padding: 20px 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        .status-item .number { font-size: 2.5em; font-weight: bold; color: #00ff88; }
+        .status-item .label { color: #888; font-size: 0.9em; margin-top: 5px; }
+        .section {
+            background: #111;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #222;
+        }
+        .section h2 {
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tweet-card {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .tweet-card .content {
+            font-size: 1.1em;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+        .tweet-card .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+        .btn-copy {
+            background: #00ff88;
+            color: #000;
+        }
+        .btn-copy:hover { background: #00cc6a; }
+        .btn-post {
+            background: #1da1f2;
+            color: #fff;
+        }
+        .btn-post:hover { background: #0d8bd9; }
+        .btn-reddit {
+            background: #ff4500;
+            color: #fff;
+        }
+        .btn-reddit:hover { background: #cc3700; }
+        .btn-done {
+            background: #333;
+            color: #888;
+        }
+        .checklist {
+            list-style: none;
+        }
+        .checklist li {
+            padding: 15px;
+            background: #0a0a0a;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #222;
+        }
+        .checklist input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: #00ff88;
+        }
+        .checklist .done { opacity: 0.5; text-decoration: line-through; }
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .quick-link {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2a2a4e 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            text-align: center;
+            border: 1px solid #333;
+            transition: all 0.2s;
+        }
+        .quick-link:hover {
+            transform: translateY(-3px);
+            border-color: #00ff88;
+        }
+        .quick-link .icon { font-size: 2em; margin-bottom: 10px; }
+        .quick-link .title { font-weight: 600; }
+        .timer {
+            font-size: 3em;
+            font-weight: bold;
+            color: #00ff88;
+            text-align: center;
+            padding: 30px;
+        }
+        .copied {
+            background: #00ff88 !important;
+            color: #000 !important;
+        }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8em; }
+            .status-item { padding: 15px 20px; }
+            .status-item .number { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 Launch Command Center</h1>
+        <div class="subtitle">THE ZONE BIO - Revenue Launch Dashboard</div>
+        <div class="timer" id="timer">00:00</div>
+        <p style="color: #888; margin-top: 10px;">Time since launch started</p>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-item">
+            <div class="number">30+</div>
+            <div class="label">Live Pages</div>
+        </div>
+        <div class="status-item">
+            <div class="number">8</div>
+            <div class="label">Viral Tools</div>
+        </div>
+        <div class="status-item">
+            <div class="number">$0</div>
+            <div class="label" id="revenue">Revenue Today</div>
+        </div>
+        <div class="status-item">
+            <div class="number" id="posts-done">0/10</div>
+            <div class="label">Posts Done</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🐦 Twitter Launch Sequence (Post in order)</h2>
+        
+        <div class="tweet-card" data-id="1">
+            <div class="content">Most people drink coffee wrong.
+
+They spike cortisol at the worst time, crash by 2pm, and wonder why they can't focus.
+
+Here's the scientific approach to caffeine (that nobody talks about): 🧵</div>
+            <div class="actions">
+                <button class="btn btn-copy" onclick="copyText(this)">📋 Copy</button>
+                <a href="https://twitter.com/intent/tweet" target="_blank" class="btn btn-post">Post to Twitter</a>
+                <button class="btn btn-done" onclick="markDone(this)">✓ Done</button>
+            </div>
+        </div>
+
+        <div class="tweet-card" data-id="2">
+            <div class="content">I built a free tool that calculates your caffeine efficiency score.
+
+Most people score below 50%.
+
+Take the 2-minute test: https://zoneprojectz.github.io/tzb-flow-guide/caffeine.html
+
+(Reply with your score 👇)</div>
+            <div class="actions">
+                <button class="btn btn-copy" onclick="copyText(this)">📋 Copy</button>
+                <a href="https://twitter.com/intent/tweet" target="_blank" class="btn btn-post">Post to Twitter</a>
+                <button class="btn btn-done" onclick="markDone(this)">✓ Done</button>
+            </div>
+        </div>
+
+        <div class="tweet-card" data-id="3">
+            <div class="content">Free tool: Find your Focus Archetype
+
+Are you a Deep Worker, Sprint Master, or Night Owl?
+
+7 questions → Personalized productivity stack
+
+https://zoneprojectz.github.io/tzb-flow-guide/stack.html</div>
+            <div class="actions">
+                <button class="btn btn-copy" onclick="copyText(this)">📋 Copy</button>
+                <a href="https://twitter.com/intent/tweet" target="_blank" class="btn btn-post">Post to Twitter</a>
+                <button class="btn btn-done" onclick="markDone(this)">✓ Done</button>
+            </div>
+        </div>
+
+        <div class="tweet-card" data-id="4">
+            <div class="content">I spent 200+ hours researching flow state.
+
+Condensed it into a $9 guide.
+
+The 4 triggers. The science. The exact protocol.
+
+First 24 hours: Pay what you want.
+
+https://zoneprojectz.github.io/tzb-flow-guide/checkout.html</div>
+            <div class="actions">
+                <button class="btn btn-copy" onclick="copyText(this)">📋 Copy</button>
+                <a href="https://twitter.com/intent/tweet" target="_blank" class="btn btn-post">Post to Twitter</a>
+                <button class="btn btn-done" onclick="markDone(this)">✓ Done</button>
+            </div>
+        </div>
+
+        <div class="tweet-card" data-id="5">
+            <div class="content">The 15-minute rule changed everything for me:
+
+If you can't focus for 15 minutes, don't try for 2 hours.
+
+Start small. Build the muscle.
+
+Here's a free Pomodoro timer I built: https://zoneprojectz.github.io/tzb-flow-guide/timer.html</div>
+            <div class="actions">
+                <button class="btn btn-copy" onclick="copyText(this)">📋 Copy</button>
+                <a href="https://twitter.com/intent/tweet" target="_blank" class="btn btn-post">Post to Twitter</a>
+                <button class="btn btn-done" onclick="markDone(this)">✓ Done</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🔴 Reddit Posts (High-value subreddits)</h2>
+        
+        <div class="tweet-card">
+            <div class="content"><strong>r/productivity</strong> (2.5M members)
+
+Title: I built a free Focus Stack quiz - find your productivity archetype
+
+Body: Hey r/productivity! I've been obsessed with flow state research for months and built this free tool that identifies your "focus archetype" based on how you work best.
+
+Takes about 2 minutes. Tells you if you're a Deep Worker, Sprint Master, Night Owl, etc. - and gives personalized tool/routine recommendations.
+
+No email required, completely free: [link]
+
+Would love feedback from this community!</div>
+            <div class="actions">
+                <button class="btn btn-copy" onclick="copyText(this)">📋 Copy</button>
+                <a href="https://reddit.com/r/productivity/submit" target="_blank" class="btn btn-reddit">Open r/productivity</a>
+                <button class="btn btn-done" onclick="markDone(this)">✓ Done</button>
+            </div>
+        </div>
+
+        <div class="tweet-card">
+            <div class="content"><strong>r/getdisciplined</strong> (1.1M members)
+
+Title: [Method] The Caffeine Audit - why your coffee might be sabotaging your focus
+
+Body: Built a quick diagnostic tool to check if you're using caffeine optimally for focus.
+
+Most people drink coffee first thing (cortisol spike timing is wrong) or too late (ruins sleep quality).
+
+The tool asks 7 questions and gives you a "caffeine efficiency score" with specific fixes.
+
+Free, no signup: [link]
+
+Mine was 45% before I fixed my timing. Now at 82%.</div>
+            <div class="actions">
+                <button class="btn btn-copy" onclick="copyText(this)">📋 Copy</button>
+                <a href="https://reddit.com/r/getdisciplined/submit" target="_blank" class="btn btn-reddit">Open r/getdisciplined</a>
+                <button class="btn btn-done" onclick="markDone(this)">✓ Done</button>
+            </div>
+        </div>
+
+        <div class="tweet-card">
+            <div class="content"><strong>r/Entrepreneur</strong> (2M members)
+
+Title: Shipped 8 free tools in 48 hours to validate a productivity brand - here's what I learned
+
+Body: Building THE ZONE BIO (biohacking for focus/flow). Instead of building product first, I shipped:
+
+- Caffeine efficiency calculator
+- Focus archetype quiz
+- Pomodoro timer
+- Schedule generator
+- 7-day focus challenge
+
+All free. Goal: validate demand before manufacturing.
+
+Traffic so far: [X] visits
+Email signups: [X]
+Lessons: [share 2-3 insights]
+
+Link to all tools: https://zoneprojectz.github.io/tzb-flow-guide/resources.html</div>
+            <div class="actions">
+                <button class="btn btn-copy" onclick="copyText(this)">📋 Copy</button>
+                <a href="https://reddit.com/r/Entrepreneur/submit" target="_blank" class="btn btn-reddit">Open r/Entrepreneur</a>
+                <button class="btn btn-done" onclick="markDone(this)">✓ Done</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>⚡ Quick Launch Checklist</h2>
+        <ul class="checklist">
+            <li><input type="checkbox" onchange="updateProgress()"> <span>Post first Twitter thread (caffeine)</span></li>
+            <li><input type="checkbox" onchange="updateProgress()"> <span>Post Stack Builder tweet</span></li>
+            <li><input type="checkbox" onchange="updateProgress()"> <span>Submit to r/productivity</span></li>
+            <li><input type="checkbox" onchange="updateProgress()"> <span>Submit to r/getdisciplined</span></li>
+            <li><input type="checkbox" onchange="updateProgress()"> <span>Share timer in r/ADHD</span></li>
+            <li><input type="checkbox" onchange="updateProgress()"> <span>Post "building in public" update</span></li>
+            <li><input type="checkbox" onchange="updateProgress()"> <span>DM 3 productivity creators</span></li>
+            <li><input type="checkbox" onchange="updateProgress()"> <span>Post LinkedIn article</span></li>
+            <li><input type="checkbox" onchange="updateProgress()"> <span>Schedule tomorrow's tweets</span></li>
+            <li><input type="checkbox" onchange="updateProgress()"> <span>Check first hour analytics</span></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>🔗 Live Pages (All Working)</h2>
+        <div class="quick-links">
+            <a href="https://zoneprojectz.github.io/tzb-flow-guide/resources.html" target="_blank" class="quick-link">
+                <div class="icon">📚</div>
+                <div class="title">Resources Hub</div>
+            </a>
+            <a href="https://zoneprojectz.github.io/tzb-flow-guide/stack.html" target="_blank" class="quick-link">
+                <div class="icon">🎯</div>
+                <div class="title">Stack Builder</div>
+            </a>
+            <a href="https://zoneprojectz.github.io/tzb-flow-guide/caffeine.html" target="_blank" class="quick-link">
+                <div class="icon">☕</div>
+                <div class="title">Caffeine Audit</div>
+            </a>
+            <a href="https://zoneprojectz.github.io/tzb-flow-guide/timer.html" target="_blank" class="quick-link">
+                <div class="icon">⏱️</div>
+                <div class="title">Focus Timer</div>
+            </a>
+            <a href="https://zoneprojectz.github.io/tzb-flow-guide/quiz.html" target="_blank" class="quick-link">
+                <div class="icon">📊</div>
+                <div class="title">Focus Quiz</div>
+            </a>
+            <a href="https://zoneprojectz.github.io/tzb-flow-guide/schedule.html" target="_blank" class="quick-link">
+                <div class="icon">📅</div>
+                <div class="title">Schedule Gen</div>
+            </a>
+            <a href="https://zoneprojectz.github.io/tzb-flow-guide/checkout.html" target="_blank" class="quick-link">
+                <div class="icon">💳</div>
+                <div class="title">Checkout ($9)</div>
+            </a>
+            <a href="https://zoneprojectz.github.io/tzb-flow-guide/founding.html" target="_blank" class="quick-link">
+                <div class="icon">⭐</div>
+                <div class="title">Founding ($29)</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📱 Emergency Copy (Most Viral)</h2>
+        <div class="tweet-card">
+            <div class="content">🚨 ULTRA-VIRAL HOOK (use when needed):
+
+"I just realized why I can never focus before 10am.
+
+It's not laziness. It's cortisol.
+
+Your body produces peak cortisol 30-45min after waking. Adding caffeine = cortisol overdrive = anxiety, not focus.
+
+Wait 90 minutes. Changed everything."</div>
+            <div class="actions">
+                <button class="btn btn-copy" onclick="copyText(this)">📋 Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Timer
+        let startTime = localStorage.getItem('launchStart');
+        if (!startTime) {
+            startTime = Date.now();
+            localStorage.setItem('launchStart', startTime);
+        }
+        
+        function updateTimer() {
+            const elapsed = Date.now() - parseInt(startTime);
+            const minutes = Math.floor(elapsed / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Copy function
+        function copyText(btn) {
+            const card = btn.closest('.tweet-card');
+            const content = card.querySelector('.content').innerText;
+            navigator.clipboard.writeText(content);
+            btn.textContent = '✓ Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = '📋 Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        }
+
+        // Mark done
+        function markDone(btn) {
+            const card = btn.closest('.tweet-card');
+            card.style.opacity = '0.5';
+            btn.textContent = '✓ Posted';
+            updateProgress();
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            const done = Array.from(checkboxes).filter(cb => cb.checked).length;
+            document.getElementById('posts-done').textContent = `${done}/10`;
+            
+            // Save state
+            const state = Array.from(checkboxes).map(cb => cb.checked);
+            localStorage.setItem('launchProgress', JSON.stringify(state));
+        }
+
+        // Load saved state
+        const savedProgress = localStorage.getItem('launchProgress');
+        if (savedProgress) {
+            const state = JSON.parse(savedProgress);
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            state.forEach((checked, i) => {
+                if (checkboxes[i]) checkboxes[i].checked = checked;
+            });
+            updateProgress();
+        }
+
+        // Reset button (hidden, triple-click header to reset)
+        document.querySelector('.header h1').addEventListener('click', function(e) {
+            if (e.detail === 3) {
+                if (confirm('Reset all progress?')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
