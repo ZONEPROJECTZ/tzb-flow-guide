@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1:1 Productivity Audit | THE ZONE BIO</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        
+        .highlight {
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: #9ca3af;
+            margin-bottom: 48px;
+        }
+        
+        .offer-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .offer-box h2 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist li {
+            padding: 12px 0;
+            padding-left: 32px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+        
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .price-section {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .price {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .price-note {
+            color: #9ca3af;
+            margin-top: 8px;
+        }
+        
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 20px 32px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 32px 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+        }
+        
+        .guarantee {
+            text-align: center;
+            padding: 24px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            margin-bottom: 48px;
+        }
+        
+        .guarantee-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+        
+        .process {
+            margin-bottom: 48px;
+        }
+        
+        .process h3 {
+            font-size: 1.25rem;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+        
+        .step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .step-content p {
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+        
+        .testimonial {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid #8b5cf6;
+            padding: 24px;
+            margin: 32px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        
+        .testimonial .author {
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+        
+        .faq {
+            margin-top: 48px;
+        }
+        
+        .faq h3 {
+            font-size: 1.25rem;
+            margin-bottom: 24px;
+        }
+        
+        .faq-item {
+            margin-bottom: 24px;
+        }
+        
+        .faq-item h4 {
+            color: #a78bfa;
+            margin-bottom: 8px;
+        }
+        
+        .faq-item p {
+            color: #9ca3af;
+        }
+        
+        .limited {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 16px 24px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .limited strong {
+            color: #f87171;
+        }
+        
+        footer {
+            text-align: center;
+            padding-top: 48px;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: #8b5cf6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="badge">🎯 1-on-1 Service</span>
+        
+        <h1>Get a <span class="highlight">Personalized Productivity System</span> Built for Your Brain</h1>
+        
+        <p class="subtitle">A 30-minute deep dive into your work patterns, energy cycles, and goals — with a custom action plan you can implement immediately.</p>
+        
+        <div class="offer-box">
+            <h2>What You Get</h2>
+            <ul class="checklist">
+                <li><strong>30-Minute Video Call</strong> — Screen share your calendar, talk through your day</li>
+                <li><strong>Chronotype Analysis</strong> — When YOUR brain peaks for different work types</li>
+                <li><strong>Custom Deep Work Schedule</strong> — Time blocks designed around your life</li>
+                <li><strong>Environment Audit</strong> — Physical and digital workspace optimization</li>
+                <li><strong>Personalized Stack</strong> — Supplements, tools, and habits for YOUR situation</li>
+                <li><strong>Written Summary</strong> — Action plan delivered within 24 hours</li>
+                <li><strong>1 Week of Follow-Up</strong> — Async support as you implement</li>
+            </ul>
+        </div>
+        
+        <div class="process">
+            <h3>How It Works</h3>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Book & Prep</h4>
+                    <p>Choose your time slot. You'll get a quick intake form about your work, goals, and current struggles.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>30-Min Deep Dive</h4>
+                    <p>We screen share, review your actual schedule, and identify the biggest leverage points.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Custom Plan Delivered</h4>
+                    <p>Within 24 hours, you get a detailed action plan with your new schedule, stack, and habits.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Implement & Iterate</h4>
+                    <p>7 days of async support. Questions? Stuck? Just message me.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="testimonial">
+            <p>"I thought I knew my productive hours. Min helped me realize I was scheduling my hardest work during my worst hours. Simple change, huge difference."</p>
+            <span class="author">— Early beta client</span>
+        </div>
+        
+        <div class="price-section">
+            <div class="price">$49</div>
+            <p class="price-note">One-time. No subscription. Yours forever.</p>
+        </div>
+        
+        <div class="limited">
+            <strong>⚡ Limited:</strong> Only taking 5 audits per week to maintain quality.
+        </div>
+        
+        <a href="https://paypal.me/thezonebio/49" class="cta-button" target="_blank">
+            Book Your Productivity Audit →
+        </a>
+        
+        <div class="guarantee">
+            <div class="guarantee-icon">🛡️</div>
+            <p><strong>100% Satisfaction Guarantee</strong></p>
+            <p style="color: #9ca3af; font-size: 0.95rem;">If you don't find the session valuable, I'll refund you. No questions asked.</p>
+        </div>
+        
+        <div class="faq">
+            <h3>Questions</h3>
+            
+            <div class="faq-item">
+                <h4>Who is this for?</h4>
+                <p>Founders, creators, developers, students — anyone doing knowledge work who wants to optimize their deep work time. Not for people looking for magic pills; you'll need to implement what we discuss.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>What's your background?</h4>
+                <p>I've spent years studying flow state research (Csikszentmihalyi, Huberman, etc.) and building productivity systems. I'm also the founder of THE ZONE BIO, where we develop supplements for cognitive performance.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>What if I'm in a different timezone?</h4>
+                <p>I'm in Seoul (GMT+9) but can accommodate most timezones. We'll find a time that works.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Can't I just use the free quiz?</h4>
+                <p>The <a href="schedule.html">free schedule generator</a> is great for basics. This audit goes much deeper — we look at your actual calendar, identify hidden time leaks, and build a system around your specific constraints.</p>
+            </div>
+        </div>
+        
+        <a href="https://paypal.me/thezonebio/49" class="cta-button" target="_blank">
+            Book Your Audit — $49 →
+        </a>
+        
+        <footer>
+            <p>Questions? Reach out: me@thezone.bio</p>
+            <p style="margin-top: 8px;">
+                <a href="index.html">Flow State Guide</a> · 
+                <a href="schedule.html">Free Schedule Tool</a> · 
+                <a href="quiz.html">Focus Quiz</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
