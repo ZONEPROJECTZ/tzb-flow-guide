@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow State Assessment | THE ZONE BIO</title>
+    <meta name="description" content="Discover your flow potential. Take this 2-minute assessment to find out how ready you are for deep work.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .logo h1 {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #888;
+            font-weight: 500;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header p {
+            color: #888;
+            font-size: 16px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .question-container {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        .question-number {
+            font-size: 12px;
+            color: #4ade80;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .option:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(74, 222, 128, 0.5);
+        }
+        .option.selected {
+            background: rgba(74, 222, 128, 0.15);
+            border-color: #4ade80;
+        }
+        .option-circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #444;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .option.selected .option-circle {
+            border-color: #4ade80;
+            background: #4ade80;
+        }
+        .option.selected .option-circle::after {
+            content: '✓';
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .btn {
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            color: #000;
+            border: none;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .btn:hover { transform: scale(1.02); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        
+        /* Results */
+        .results { display: none; text-align: center; }
+        .results.show { display: block; }
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#4ade80 var(--score-percent), #333 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+        .score-inner {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: #1a1a2e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .score-number {
+            font-size: 48px;
+            font-weight: 700;
+        }
+        .score-label {
+            font-size: 14px;
+            color: #888;
+        }
+        .score-tier {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .score-description {
+            color: #888;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .recommendations {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: left;
+            margin-bottom: 32px;
+        }
+        .recommendations h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+        .rec-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: #ccc;
+        }
+        .rec-item:last-child { margin-bottom: 0; }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(34, 197, 94, 0.05));
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        .cta-box h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .cta-box p {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #4ade80;
+        }
+        .price-note {
+            font-size: 14px;
+            color: #666;
+        }
+        .email-capture {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 32px;
+        }
+        .email-capture h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .email-capture p {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 16px;
+        }
+        .email-form {
+            display: flex;
+            gap: 12px;
+        }
+        .email-form input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .email-form input::placeholder { color: #666; }
+        .email-form button {
+            background: #4ade80;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        @media (max-width: 480px) {
+            .header h2 { font-size: 24px; }
+            .question-text { font-size: 18px; }
+            .email-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>THE ZONE BIO</h1>
+        </div>
+        
+        <div id="quiz">
+            <div class="header">
+                <h2>Flow State Assessment</h2>
+                <p>Discover your flow potential in 2 minutes</p>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress" style="width: 0%"></div>
+            </div>
+            
+            <div id="question-area"></div>
+            
+            <button class="btn" id="next-btn" disabled onclick="nextQuestion()">Continue</button>
+        </div>
+        
+        <div class="results" id="results">
+            <div class="header">
+                <h2>Your Flow Score</h2>
+            </div>
+            
+            <div class="score-circle" id="score-circle">
+                <div class="score-inner">
+                    <div class="score-number" id="score-number">0</div>
+                    <div class="score-label">out of 100</div>
+                </div>
+            </div>
+            
+            <div class="score-tier" id="score-tier"></div>
+            <div class="score-description" id="score-description"></div>
+            
+            <div class="recommendations" id="recommendations">
+                <h3>🎯 Your Top Priorities</h3>
+                <div id="rec-list"></div>
+            </div>
+            
+            <div class="cta-box">
+                <h3>📖 The Flow State Guide</h3>
+                <p>A complete system to engineer flow on demand. Covers environment, triggers, protocols, and tracking.</p>
+                <div class="price">$9 <span class="price-note">instant PDF delivery</span></div>
+                <br>
+                <a href="https://zoneprojectz.github.io/tzb-flow-guide/" target="_blank">
+                    <button class="btn">Get the Full Guide →</button>
+                </a>
+            </div>
+            
+            <div class="email-capture">
+                <h4>🎁 Free: Flow State Cheatsheet</h4>
+                <p>Get the 1-page quick reference + weekly flow tips</p>
+                <form class="email-form" action="https://formsubmit.co/me@thezone.bio" method="POST">
+                    <input type="hidden" name="_subject" value="Flow Assessment - Free Cheatsheet Request">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://zoneprojectz.github.io/tzb-flow-guide/thank-you.html">
+                    <input type="email" name="email" placeholder="your@email.com" required>
+                    <button type="submit">Send Free PDF</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const questions = [
+            {
+                q: "How often do you lose track of time while working?",
+                options: [
+                    { text: "Never — I'm always watching the clock", score: 1 },
+                    { text: "Rarely — maybe once a month", score: 2 },
+                    { text: "Sometimes — a few times a week", score: 3 },
+                    { text: "Often — almost daily", score: 4 },
+                    { text: "Always — hours disappear regularly", score: 5 }
+                ]
+            },
+            {
+                q: "When you sit down to focus, how quickly can you get into deep work?",
+                options: [
+                    { text: "30+ minutes — I procrastinate a lot", score: 1 },
+                    { text: "15-30 minutes — takes a while to settle", score: 2 },
+                    { text: "5-15 minutes — reasonably quick", score: 3 },
+                    { text: "Under 5 minutes — I have routines", score: 4 },
+                    { text: "Instantly — I have a system", score: 5 }
+                ]
+            },
+            {
+                q: "How is your work environment optimized for focus?",
+                options: [
+                    { text: "Not at all — constant interruptions", score: 1 },
+                    { text: "Minimal — I try to reduce distractions", score: 2 },
+                    { text: "Moderate — some boundaries in place", score: 3 },
+                    { text: "Good — dedicated focus space", score: 4 },
+                    { text: "Excellent — fully engineered for flow", score: 5 }
+                ]
+            },
+            {
+                q: "Do you know what triggers YOUR flow state?",
+                options: [
+                    { text: "No idea — it happens randomly", score: 1 },
+                    { text: "Vague sense — sometimes I notice patterns", score: 2 },
+                    { text: "Somewhat — I know a few things that help", score: 3 },
+                    { text: "Mostly — I have identified my triggers", score: 4 },
+                    { text: "Precisely — I can engineer it reliably", score: 5 }
+                ]
+            },
+            {
+                q: "How do you feel after a typical work session?",
+                options: [
+                    { text: "Drained and scattered", score: 1 },
+                    { text: "Tired with little to show", score: 2 },
+                    { text: "Mixed — some good, some wasted time", score: 3 },
+                    { text: "Satisfied with progress", score: 4 },
+                    { text: "Energized and accomplished", score: 5 }
+                ]
+            },
+            {
+                q: "How well do you manage digital distractions?",
+                options: [
+                    { text: "Poorly — I check phone/notifications constantly", score: 1 },
+                    { text: "Struggling — I try but often fail", score: 2 },
+                    { text: "Okay — I can resist for short periods", score: 3 },
+                    { text: "Well — I have systems in place", score: 4 },
+                    { text: "Excellent — fully controlled environment", score: 5 }
+                ]
+            },
+            {
+                q: "Do you have a pre-work ritual or routine?",
+                options: [
+                    { text: "No — I just start whenever", score: 1 },
+                    { text: "Minimal — maybe coffee", score: 2 },
+                    { text: "Basic — a few consistent habits", score: 3 },
+                    { text: "Solid — 5-10 minute routine", score: 4 },
+                    { text: "Comprehensive — optimized protocol", score: 5 }
+                ]
+            },
+            {
+                q: "How would you rate your energy management?",
+                options: [
+                    { text: "Poor — I work regardless of energy", score: 1 },
+                    { text: "Low — I know when I'm tired but push through", score: 2 },
+                    { text: "Medium — I try to work in good hours", score: 3 },
+                    { text: "Good — I protect my peak hours", score: 4 },
+                    { text: "Excellent — I optimize sleep, breaks, nutrition", score: 5 }
+                ]
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let answers = [];
+        
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            
+            let html = `
+                <div class="question-container">
+                    <div class="question-number">QUESTION ${currentQuestion + 1} OF ${questions.length}</div>
+                    <div class="question-text">${q.q}</div>
+                    <div class="options">
+            `;
+            
+            q.options.forEach((opt, i) => {
+                const selected = answers[currentQuestion] === i ? 'selected' : '';
+                html += `
+                    <div class="option ${selected}" onclick="selectOption(${i})">
+                        <div class="option-circle"></div>
+                        <span>${opt.text}</span>
+                    </div>
+                `;
+            });
+            
+            html += '</div></div>';
+            document.getElementById('question-area').innerHTML = html;
+            
+            const btn = document.getElementById('next-btn');
+            btn.disabled = answers[currentQuestion] === undefined;
+            btn.textContent = currentQuestion === questions.length - 1 ? 'See My Results' : 'Continue';
+        }
+        
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            renderQuestion();
+        }
+        
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        function showResults() {
+            let totalScore = 0;
+            answers.forEach((answerIndex, qIndex) => {
+                totalScore += questions[qIndex].options[answerIndex].score;
+            });
+            
+            const maxScore = questions.length * 5;
+            const percentage = Math.round((totalScore / maxScore) * 100);
+            
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            // Animate score
+            const scoreCircle = document.getElementById('score-circle');
+            const scoreNumber = document.getElementById('score-number');
+            scoreCircle.style.setProperty('--score-percent', percentage + '%');
+            
+            let count = 0;
+            const interval = setInterval(() => {
+                count += 2;
+                if (count >= percentage) {
+                    count = percentage;
+                    clearInterval(interval);
+                }
+                scoreNumber.textContent = count;
+            }, 30);
+            
+            // Tier and description
+            const tierEl = document.getElementById('score-tier');
+            const descEl = document.getElementById('score-description');
+            
+            let tier, desc, recs;
+            
+            if (percentage >= 80) {
+                tier = "🏆 Flow Master";
+                desc = "You have strong flow fundamentals. You're likely already experiencing deep work regularly. The guide can help you optimize and reach even higher peaks.";
+                recs = [
+                    "Fine-tune your triggers for faster entry",
+                    "Experiment with longer flow blocks (3-4 hours)",
+                    "Track your sessions to identify patterns"
+                ];
+            } else if (percentage >= 60) {
+                tier = "🎯 Flow Builder";
+                desc = "You have good habits but inconsistent results. With the right systems, you could dramatically increase your flow frequency.";
+                recs = [
+                    "Establish a consistent pre-work ritual",
+                    "Identify and eliminate your top 3 distractions",
+                    "Protect 2-hour blocks for deep work"
+                ];
+            } else if (percentage >= 40) {
+                tier = "🌱 Flow Seeker";
+                desc = "You've tasted flow but can't access it reliably. You're leaving significant potential on the table. A structured approach will change everything.";
+                recs = [
+                    "Create a dedicated focus environment",
+                    "Start with 90-minute focus blocks",
+                    "Learn your personal flow triggers"
+                ];
+            } else {
+                tier = "🔥 Flow Beginner";
+                desc = "Flow state may feel rare or random to you. The good news: flow is a skill that can be learned. You have the most potential for improvement.";
+                recs = [
+                    "Master the basics: sleep, environment, single-tasking",
+                    "Eliminate phone during work hours",
+                    "Start with 25-minute focused sprints"
+                ];
+            }
+            
+            tierEl.textContent = tier;
+            descEl.textContent = desc;
+            
+            const recList = document.getElementById('rec-list');
+            recList.innerHTML = recs.map(r => `<div class="rec-item"><span>→</span><span>${r}</span></div>`).join('');
+        }
+        
+        // Start
+        renderQuestion();
+    </script>
+</body>
+</html>
