@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Flow State Guide | THE ZONE BIO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+        }
+        
+        .checkout-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .product-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .product-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .product-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .product-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        
+        .price-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: 700;
+            color: #4ade80;
+        }
+        
+        .price-note {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .features {
+            margin-bottom: 30px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-check {
+            color: #4ade80;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .checkout-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-paypal {
+            background: #0070ba;
+            color: white;
+        }
+        
+        .btn-paypal:hover {
+            background: #005ea6;
+        }
+        
+        .btn-lemon {
+            background: #ffc233;
+            color: #1a1a1a;
+        }
+        
+        .btn-lemon:hover {
+            background: #ffb000;
+        }
+        
+        .btn-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .guarantee {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .guarantee-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+        }
+        
+        .guarantee-text strong {
+            color: #4ade80;
+        }
+        
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+        
+        .secure-badge svg {
+            margin-right: 6px;
+        }
+        
+        /* Bundle option */
+        .bundle-option {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .bundle-badge {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #4ade80;
+            color: #1a1a1a;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        
+        .bundle-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .bundle-desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .bundle-price {
+            color: #4ade80;
+            font-weight: 700;
+        }
+        
+        @media (max-width: 480px) {
+            .checkout-container {
+                padding: 25px;
+            }
+            
+            .price {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="product-header">
+            <div class="product-emoji">🧠</div>
+            <h1 class="product-title">The Flow State Guide</h1>
+            <p class="product-subtitle">Master focus on demand. Stop fighting your brain.</p>
+        </div>
+        
+        <div class="price-section">
+            <div class="price">$9</div>
+            <p class="price-note">One-time payment • Instant delivery • PDF</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <span class="feature-check">✓</span>
+                <span>The neuroscience of flow (simplified)</span>
+            </div>
+            <div class="feature">
+                <span class="feature-check">✓</span>
+                <span>4 conditions checklist you can use daily</span>
+            </div>
+            <div class="feature">
+                <span class="feature-check">✓</span>
+                <span>Environment design templates</span>
+            </div>
+            <div class="feature">
+                <span class="feature-check">✓</span>
+                <span>Nutrition guide for sustained focus</span>
+            </div>
+            <div class="feature">
+                <span class="feature-check">✓</span>
+                <span>My exact daily flow protocol</span>
+            </div>
+            <div class="feature">
+                <span class="feature-check">✓</span>
+                <span>English + Korean versions included</span>
+            </div>
+        </div>
+        
+        <div class="bundle-option">
+            <span class="bundle-badge">SAVE $4</span>
+            <div class="bundle-title">🎁 Want the bundle?</div>
+            <div class="bundle-desc">
+                Flow State Guide + Focus Planner = <span class="bundle-price">$12</span> (instead of $16)
+            </div>
+        </div>
+        
+        <div class="checkout-buttons">
+            <!-- PayPal Direct Link -->
+            <a href="https://paypal.me/thezonebio/9" class="btn btn-paypal" target="_blank">
+                <span class="btn-icon">💳</span>
+                Pay with PayPal — $9
+            </a>
+            
+            <!-- Lemon Squeezy (placeholder - update when live) -->
+            <!-- 
+            <a href="YOUR_LEMON_SQUEEZY_LINK" class="btn btn-lemon" target="_blank">
+                <span class="btn-icon">🍋</span>
+                Pay with Card — $9
+            </a>
+            -->
+            
+            <!-- Bundle PayPal -->
+            <a href="https://paypal.me/thezonebio/12" class="btn btn-paypal" style="background: #4ade80; color: #1a1a1a;" target="_blank">
+                <span class="btn-icon">🎁</span>
+                Get the Bundle — $12
+            </a>
+        </div>
+        
+        <div class="guarantee">
+            <p class="guarantee-text">
+                <strong>100% Satisfaction Guarantee</strong><br>
+                Not useful? Email me and I'll refund you. No questions asked.
+            </p>
+            <div class="secure-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                </svg>
+                Secure payment via PayPal
+            </div>
+        </div>
+    </div>
+    
+    <!-- After payment instructions (show this on thank you page or via email) -->
+    <!--
+    <div style="display:none" id="post-purchase-instructions">
+        <h2>Thank you for your purchase!</h2>
+        <p>Please send your PayPal receipt to: me@thezone.bio</p>
+        <p>I'll send you the PDF within 24 hours (usually much faster).</p>
+    </div>
+    -->
+</body>
+</html>
