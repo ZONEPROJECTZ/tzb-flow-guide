@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Your Focus Stack | THE ZONE BIO</title>
+    <meta name="description" content="Get a personalized productivity stack: tools, supplements, and routines tailored to your work style.">
+    <meta property="og:title" content="What's Your Perfect Focus Stack?">
+    <meta property="og:description" content="Answer 8 questions → Get your personalized productivity toolkit">
+    <meta property="og:type" content="website">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        
+        .header {
+            text-align: center;
+            padding: 40px 0;
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header p { color: #888; font-size: 1.1rem; }
+        
+        .progress-bar {
+            background: #222;
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .question-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            display: none;
+        }
+        .question-card.active { display: block; }
+        
+        .question-number {
+            font-size: 0.9rem;
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+        
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .option {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            padding: 16px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .option:hover {
+            border-color: #00d4ff;
+            background: rgba(0,212,255,0.1);
+        }
+        .option.selected {
+            border-color: #7b2cbf;
+            background: rgba(123,44,191,0.2);
+        }
+        .option-icon { font-size: 1.5rem; }
+        .option-text { font-size: 1rem; }
+        
+        /* Results */
+        .results {
+            display: none;
+            text-align: center;
+        }
+        .results.active { display: block; }
+        
+        .stack-card {
+            background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(123,44,191,0.1));
+            border: 2px solid rgba(123,44,191,0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .stack-title {
+            font-size: 0.9rem;
+            color: #00d4ff;
+            margin-bottom: 5px;
+        }
+        .stack-name {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stack-tagline {
+            color: #888;
+            font-size: 1rem;
+        }
+        
+        .recommendation {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .rec-category {
+            font-size: 0.8rem;
+            color: #00d4ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .rec-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .rec-item:last-child { border-bottom: none; }
+        .rec-icon { font-size: 1.3rem; }
+        .rec-name { font-weight: 600; }
+        .rec-desc { font-size: 0.85rem; color: #888; }
+        
+        .featured-product {
+            background: linear-gradient(135deg, #1a472a, #0a2a1a);
+            border: 2px solid #2d5a3d;
+            border-radius: 16px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        .featured-badge {
+            background: #2d5a3d;
+            color: #7bed9f;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .featured-title {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .featured-desc {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        .featured-benefits {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .benefit-tag {
+            background: rgba(123,237,159,0.1);
+            color: #7bed9f;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 10px 5px;
+            transition: transform 0.2s;
+        }
+        .cta-button:hover { transform: scale(1.05); }
+        .cta-button.secondary {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .share-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .share-title {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #888;
+        }
+        
+        .shareable-card {
+            background: linear-gradient(135deg, #1a1a2e, #0a0a0a);
+            border: 2px solid rgba(123,44,191,0.3);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .share-stack-name {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        .share-stack-items {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .share-brand {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #555;
+        }
+        
+        @media (max-width: 500px) {
+            .header h1 { font-size: 1.8rem; }
+            .question-text { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧬 Build Your Focus Stack</h1>
+            <p>8 questions → Your personalized productivity toolkit</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        
+        <div id="quiz-container">
+            <!-- Q1: Work Type -->
+            <div class="question-card active" data-question="1">
+                <div class="question-number">Question 1 of 8</div>
+                <div class="question-text">What's your primary work style?</div>
+                <div class="options">
+                    <div class="option" data-value="creative" data-points="creative:3">
+                        <span class="option-icon">🎨</span>
+                        <span class="option-text">Creative work (writing, design, art)</span>
+                    </div>
+                    <div class="option" data-value="analytical" data-points="analytical:3">
+                        <span class="option-icon">📊</span>
+                        <span class="option-text">Analytical work (coding, data, finance)</span>
+                    </div>
+                    <div class="option" data-value="communication" data-points="communication:3">
+                        <span class="option-icon">💬</span>
+                        <span class="option-text">Communication (meetings, sales, management)</span>
+                    </div>
+                    <div class="option" data-value="mixed" data-points="mixed:3">
+                        <span class="option-icon">🔄</span>
+                        <span class="option-text">Mixed — depends on the day</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Q2: Energy Pattern -->
+            <div class="question-card" data-question="2">
+                <div class="question-number">Question 2 of 8</div>
+                <div class="question-text">When do you feel most mentally sharp?</div>
+                <div class="options">
+                    <div class="option" data-value="morning" data-points="morning:3">
+                        <span class="option-icon">🌅</span>
+                        <span class="option-text">Early morning (5-9 AM)</span>
+                    </div>
+                    <div class="option" data-value="midday" data-points="midday:3">
+                        <span class="option-icon">☀️</span>
+                        <span class="option-text">Late morning / midday (9 AM - 1 PM)</span>
+                    </div>
+                    <div class="option" data-value="afternoon" data-points="afternoon:3">
+                        <span class="option-icon">🌤️</span>
+                        <span class="option-text">Afternoon (1-6 PM)</span>
+                    </div>
+                    <div class="option" data-value="night" data-points="night:3">
+                        <span class="option-icon">🌙</span>
+                        <span class="option-text">Night owl (after 6 PM)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Q3: Caffeine Relationship -->
+            <div class="question-card" data-question="3">
+                <div class="question-number">Question 3 of 8</div>
+                <div class="question-text">How's your relationship with caffeine?</div>
+                <div class="options">
+                    <div class="option" data-value="heavy" data-points="caffeine:high">
+                        <span class="option-icon">☕☕☕</span>
+                        <span class="option-text">Heavy user — can't function without it</span>
+                    </div>
+                    <div class="option" data-value="moderate" data-points="caffeine:moderate">
+                        <span class="option-icon">☕☕</span>
+                        <span class="option-text">Moderate — 1-2 cups, works well</span>
+                    </div>
+                    <div class="option" data-value="sensitive" data-points="caffeine:sensitive">
+                        <span class="option-icon">☕</span>
+                        <span class="option-text">Sensitive — too much makes me jittery</span>
+                    </div>
+                    <div class="option" data-value="none" data-points="caffeine:none">
+                        <span class="option-icon">🚫</span>
+                        <span class="option-text">Avoid it — prefer caffeine-free</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Q4: Biggest Challenge -->
+            <div class="question-card" data-question="4">
+                <div class="question-number">Question 4 of 8</div>
+                <div class="question-text">What's your biggest focus challenge?</div>
+                <div class="options">
+                    <div class="option" data-value="starting" data-points="challenge:starting">
+                        <span class="option-icon">🚀</span>
+                        <span class="option-text">Getting started — procrastination</span>
+                    </div>
+                    <div class="option" data-value="sustaining" data-points="challenge:sustaining">
+                        <span class="option-icon">⏱️</span>
+                        <span class="option-text">Sustaining focus — energy crashes</span>
+                    </div>
+                    <div class="option" data-value="distractions" data-points="challenge:distractions">
+                        <span class="option-icon">📱</span>
+                        <span class="option-text">Distractions — phone, notifications</span>
+                    </div>
+                    <div class="option" data-value="overwhelm" data-points="challenge:overwhelm">
+                        <span class="option-icon">🌊</span>
+                        <span class="option-text">Overwhelm — too many things to do</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Q5: Work Environment -->
+            <div class="question-card" data-question="5">
+                <div class="question-number">Question 5 of 8</div>
+                <div class="question-text">Where do you usually work?</div>
+                <div class="options">
+                    <div class="option" data-value="home" data-points="env:home">
+                        <span class="option-icon">🏠</span>
+                        <span class="option-text">Home office</span>
+                    </div>
+                    <div class="option" data-value="office" data-points="env:office">
+                        <span class="option-icon">🏢</span>
+                        <span class="option-text">Traditional office</span>
+                    </div>
+                    <div class="option" data-value="cafe" data-points="env:cafe">
+                        <span class="option-icon">☕</span>
+                        <span class="option-text">Cafes / co-working spaces</span>
+                    </div>
+                    <div class="option" data-value="mobile" data-points="env:mobile">
+                        <span class="option-icon">✈️</span>
+                        <span class="option-text">On the go — varies daily</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Q6: Budget -->
+            <div class="question-card" data-question="6">
+                <div class="question-number">Question 6 of 8</div>
+                <div class="question-text">Monthly productivity tool budget?</div>
+                <div class="options">
+                    <div class="option" data-value="free" data-points="budget:free">
+                        <span class="option-icon">🆓</span>
+                        <span class="option-text">Free only — $0</span>
+                    </div>
+                    <div class="option" data-value="low" data-points="budget:low">
+                        <span class="option-icon">💵</span>
+                        <span class="option-text">Light — under $20/month</span>
+                    </div>
+                    <div class="option" data-value="medium" data-points="budget:medium">
+                        <span class="option-icon">💵💵</span>
+                        <span class="option-text">Moderate — $20-50/month</span>
+                    </div>
+                    <div class="option" data-value="high" data-points="budget:high">
+                        <span class="option-icon">💎</span>
+                        <span class="option-text">Invest in the best — $50+</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Q7: Deep Work Hours -->
+            <div class="question-card" data-question="7">
+                <div class="question-number">Question 7 of 8</div>
+                <div class="question-text">How many hours of deep work do you need daily?</div>
+                <div class="options">
+                    <div class="option" data-value="1-2" data-points="hours:light">
+                        <span class="option-icon">⚡</span>
+                        <span class="option-text">1-2 hours — quick bursts</span>
+                    </div>
+                    <div class="option" data-value="3-4" data-points="hours:moderate">
+                        <span class="option-icon">🔥</span>
+                        <span class="option-text">3-4 hours — solid blocks</span>
+                    </div>
+                    <div class="option" data-value="5-6" data-points="hours:heavy">
+                        <span class="option-icon">💪</span>
+                        <span class="option-text">5-6 hours — serious output</span>
+                    </div>
+                    <div class="option" data-value="7+" data-points="hours:extreme">
+                        <span class="option-icon">🏆</span>
+                        <span class="option-text">7+ hours — marathon mode</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Q8: Experience -->
+            <div class="question-card" data-question="8">
+                <div class="question-number">Question 8 of 8</div>
+                <div class="question-text">Have you tried nootropics or adaptogens before?</div>
+                <div class="options">
+                    <div class="option" data-value="never" data-points="exp:beginner">
+                        <span class="option-icon">🌱</span>
+                        <span class="option-text">Never — total beginner</span>
+                    </div>
+                    <div class="option" data-value="curious" data-points="exp:curious">
+                        <span class="option-icon">🔍</span>
+                        <span class="option-text">Curious — heard about them</span>
+                    </div>
+                    <div class="option" data-value="some" data-points="exp:intermediate">
+                        <span class="option-icon">🧪</span>
+                        <span class="option-text">Some experience — tried a few</span>
+                    </div>
+                    <div class="option" data-value="expert" data-points="exp:advanced">
+                        <span class="option-icon">🧬</span>
+                        <span class="option-text">Experienced — have my favorites</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results -->
+        <div class="results" id="results">
+            <div class="stack-card">
+                <div class="stack-title">YOUR FOCUS STACK</div>
+                <div class="stack-name" id="stack-name">Loading...</div>
+                <div class="stack-tagline" id="stack-tagline"></div>
+            </div>
+            
+            <div id="recommendations"></div>
+            
+            <div class="featured-product" id="coffee-recommendation">
+                <div class="featured-badge">✨ RECOMMENDED FOR YOUR STACK</div>
+                <div class="featured-title">LOCK IN COFFEE</div>
+                <div class="featured-desc" id="coffee-reason">
+                    Mushroom coffee with Lion's Mane, Cordyceps & L-Theanine — designed for sustained focus without the crash.
+                </div>
+                <div class="featured-benefits">
+                    <span class="benefit-tag">🧠 Neural support</span>
+                    <span class="benefit-tag">⚡ Sustained energy</span>
+                    <span class="benefit-tag">😌 No jitters</span>
+                </div>
+                <a href="https://zoneprojectz.github.io/lock-in-coffee/" class="cta-button">Learn More →</a>
+            </div>
+            
+            <div class="share-section">
+                <div class="share-title">Share your stack:</div>
+                <div class="shareable-card" id="shareable">
+                    <div class="share-stack-name" id="share-name"></div>
+                    <div class="share-stack-items" id="share-items"></div>
+                    <div class="share-brand">🧬 zoneprojectz.github.io/tzb-flow-guide/stack.html</div>
+                </div>
+                <a href="#" id="twitter-share" class="cta-button">Share on Twitter</a>
+                <a href="#" class="cta-button secondary" onclick="copyResults(); return false;">📋 Copy</a>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <a href="index.html" class="cta-button">📚 Get The Flow Guide ($9)</a>
+                <a href="timer.html" class="cta-button secondary">⏱️ Try Focus Timer</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const answers = {};
+        let currentQ = 1;
+        const totalQ = 8;
+        
+        // Stack archetypes
+        const stacks = {
+            'The Deep Worker': {
+                tagline: 'Long blocks, zero distractions, maximum output',
+                tools: ['Notion', 'Freedom (app blocker)', 'Noise-canceling headphones'],
+                routines: ['90-minute work blocks', 'Morning deep work ritual', 'Digital sunset'],
+                supplements: ['Lion\'s Mane', 'L-Theanine', 'Magnesium'],
+                coffeeReason: 'Perfect for your long focus sessions. The adaptogens prevent the 3-hour crash.'
+            },
+            'The Sprint Master': {
+                tagline: 'Quick bursts, high intensity, fast switching',
+                tools: ['Todoist', 'Pomodoro timer', 'Standing desk'],
+                routines: ['25/5 Pomodoro cycles', 'Task batching', 'Movement breaks'],
+                supplements: ['Caffeine + L-Theanine', 'B-vitamins', 'Rhodiola'],
+                coffeeReason: 'The L-Theanine smooths out the caffeine for clean energy without overstimulation.'
+            },
+            'The Night Owl': {
+                tagline: 'Peak performance after dark, creative hours',
+                tools: ['f.lux (blue light filter)', 'Lo-fi playlists', 'Cozy lighting'],
+                routines: ['Reverse schedule', 'Late-night deep work', 'Morning recovery'],
+                supplements: ['Magnesium', 'Ashwagandha', 'Melatonin (later)'],
+                coffeeReason: 'Time your cup right. LOCK IN\'s adaptogen blend supports focus without disrupting later sleep.'
+            },
+            'The Creative Flow': {
+                tagline: 'Inspiration-driven, non-linear, artistic output',
+                tools: ['Notion or Obsidian', 'Moodboards', 'Ambient music'],
+                routines: ['Morning pages', 'Inspiration walks', 'Creative rituals'],
+                supplements: ['Lion\'s Mane', 'Omega-3s', 'Microdose caffeine'],
+                coffeeReason: 'Lion\'s Mane supports neuroplasticity — essential for creative thinking and novel connections.'
+            },
+            'The Analytical Mind': {
+                tagline: 'Logic-driven, data-focused, precision work',
+                tools: ['Obsidian (linked thinking)', 'Spreadsheets', 'Dual monitors'],
+                routines: ['Problem decomposition', 'Timeboxing', 'Review cycles'],
+                supplements: ['Alpha-GPC', 'Bacopa', 'Caffeine'],
+                coffeeReason: 'Cordyceps provides sustained mental energy for complex problem-solving without the crash.'
+            },
+            'The Minimalist': {
+                tagline: 'Less is more — simple tools, clear mind',
+                tools: ['Paper notebook', 'One task at a time', 'Phone in another room'],
+                routines: ['Single-tasking', 'Daily 3 priorities', 'Weekly review'],
+                supplements: ['Just coffee', 'Occasional adaptogens'],
+                coffeeReason: 'One cup that does it all — focus, calm, energy. No stacking required.'
+            }
+        };
+        
+        function updateProgress() {
+            const pct = ((currentQ - 1) / totalQ) * 100;
+            document.getElementById('progress').style.width = pct + '%';
+        }
+        
+        function selectOption(el) {
+            const card = el.closest('.question-card');
+            card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            
+            const q = card.dataset.question;
+            answers[q] = el.dataset.value;
+            
+            setTimeout(() => {
+                if (currentQ < totalQ) {
+                    card.classList.remove('active');
+                    currentQ++;
+                    document.querySelector(`[data-question="${currentQ}"]`).classList.add('active');
+                    updateProgress();
+                } else {
+                    showResults();
+                }
+            }, 300);
+        }
+        
+        function determineStack() {
+            // Logic based on answers
+            const workType = answers['1'];
+            const energy = answers['2'];
+            const caffeine = answers['3'];
+            const challenge = answers['4'];
+            const hours = answers['7'];
+            
+            if (workType === 'creative') return 'The Creative Flow';
+            if (workType === 'analytical') return 'The Analytical Mind';
+            if (energy === 'night') return 'The Night Owl';
+            if (hours === '7+' || hours === '5-6') return 'The Deep Worker';
+            if (hours === '1-2' || challenge === 'starting') return 'The Sprint Master';
+            if (answers['6'] === 'free') return 'The Minimalist';
+            
+            return 'The Deep Worker'; // Default
+        }
+        
+        function showResults() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('results').classList.add('active');
+            document.getElementById('progress').style.width = '100%';
+            
+            const stackName = determineStack();
+            const stack = stacks[stackName];
+            
+            document.getElementById('stack-name').textContent = stackName;
+            document.getElementById('stack-tagline').textContent = stack.tagline;
+            document.getElementById('coffee-reason').textContent = stack.coffeeReason;
+            
+            // Build recommendations
+            let html = '';
+            
+            html += `<div class="recommendation">
+                <div class="rec-category">🛠️ Tools</div>
+                ${stack.tools.map(t => `<div class="rec-item"><span class="rec-name">${t}</span></div>`).join('')}
+            </div>`;
+            
+            html += `<div class="recommendation">
+                <div class="rec-category">⏰ Routines</div>
+                ${stack.routines.map(r => `<div class="rec-item"><span class="rec-name">${r}</span></div>`).join('')}
+            </div>`;
+            
+            html += `<div class="recommendation">
+                <div class="rec-category">🧬 Supplements</div>
+                ${stack.supplements.map(s => `<div class="rec-item"><span class="rec-name">${s}</span></div>`).join('')}
+            </div>`;
+            
+            document.getElementById('recommendations').innerHTML = html;
+            
+            // Share card
+            document.getElementById('share-name').textContent = stackName;
+            document.getElementById('share-items').textContent = 
+                `Tools: ${stack.tools[0]} • Routine: ${stack.routines[0]} • Supplement: ${stack.supplements[0]}`;
+            
+            // Twitter share
+            const tweetText = `My Focus Stack: ${stackName} 🧬\n\n"${stack.tagline}"\n\nWhat's yours?`;
+            const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent('https://zoneprojectz.github.io/tzb-flow-guide/stack.html')}`;
+            document.getElementById('twitter-share').href = tweetUrl;
+        }
+        
+        function copyResults() {
+            const stackName = document.getElementById('stack-name').textContent;
+            const stack = stacks[stackName];
+            const text = `My Focus Stack: ${stackName}\n\n"${stack.tagline}"\n\nTools: ${stack.tools.join(', ')}\nRoutines: ${stack.routines.join(', ')}\nSupplements: ${stack.supplements.join(', ')}\n\n🧬 Build yours: zoneprojectz.github.io/tzb-flow-guide/stack.html`;
+            navigator.clipboard.writeText(text);
+            alert('Copied to clipboard!');
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                selectOption(this);
+            });
+        });
+        
+        updateProgress();
+    </script>
+</body>
+</html>
