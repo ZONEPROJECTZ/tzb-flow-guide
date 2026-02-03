@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is Your Coffee Working Against You? | THE ZONE BIO</title>
+    <meta name="description" content="Take this 60-second quiz to find out if your coffee habit is killing your focus.">
+    <meta property="og:title" content="Is Your Coffee Working Against You?">
+    <meta property="og:description" content="60-second quiz: Find out if your coffee is helping or hurting your focus.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+        .quiz-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        .question-number {
+            color: #f97316;
+            font-weight: 600;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            background: rgba(255,255,255,0.08);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        .option:hover {
+            background: rgba(249,115,22,0.1);
+            border-color: rgba(249,115,22,0.3);
+        }
+        .option.selected {
+            background: rgba(249,115,22,0.2);
+            border-color: #f97316;
+        }
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f97316, #fb923c);
+            transition: width 0.3s;
+        }
+        .hidden { display: none; }
+        
+        /* Results */
+        .result-card {
+            background: linear-gradient(135deg, rgba(249,115,22,0.2), rgba(251,146,60,0.1));
+            border: 2px solid #f97316;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #dc2626, #f97316);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .score-circle.medium { background: linear-gradient(135deg, #f97316, #eab308); }
+        .score-circle.good { background: linear-gradient(135deg, #22c55e, #10b981); }
+        
+        .verdict {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .verdict.bad { color: #f87171; }
+        .verdict.medium { color: #fbbf24; }
+        .verdict.good { color: #4ade80; }
+        
+        .issues-list {
+            text-align: left;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .issue {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .issue:last-child { margin-bottom: 0; }
+        .issue-icon { font-size: 1.2rem; }
+        
+        .solution-box {
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .solution-title {
+            color: #4ade80;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #f97316, #fb923c);
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(249,115,22,0.3);
+        }
+        
+        .share-section {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .share-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1DA1F2;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+        .share-button:hover { opacity: 0.9; }
+        
+        .logo {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .logo a { color: #f97316; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>☕ Is Your Coffee Working <em>Against</em> You?</h1>
+        <p class="subtitle">60-second quiz • Brutally honest results</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress" style="width: 0%"></div>
+        </div>
+        
+        <div id="quiz">
+            <!-- Questions rendered by JS -->
+        </div>
+        
+        <div id="results" class="hidden">
+            <!-- Results rendered by JS -->
+        </div>
+        
+        <div class="logo">
+            Powered by <a href="https://zoneprojectz.github.io/lock-in-coffee/">THE ZONE BIO</a>
+        </div>
+    </div>
+    
+    <script>
+        const questions = [
+            {
+                q: "How many cups of coffee do you drink daily?",
+                options: [
+                    { text: "1-2 cups", score: 0 },
+                    { text: "3-4 cups", score: 1 },
+                    { text: "5+ cups (I've lost count)", score: 3 }
+                ]
+            },
+            {
+                q: "When do you have your first coffee?",
+                options: [
+                    { text: "90+ minutes after waking", score: 0 },
+                    { text: "Within an hour of waking", score: 1 },
+                    { text: "Before I'm even fully awake", score: 2 }
+                ]
+            },
+            {
+                q: "What happens around 2-3 PM?",
+                options: [
+                    { text: "I'm still going strong", score: 0 },
+                    { text: "I hit a wall and need more coffee", score: 2 },
+                    { text: "I crash HARD. Every. Single. Day.", score: 3 }
+                ]
+            },
+            {
+                q: "After your coffee, how do you feel?",
+                options: [
+                    { text: "Calm, focused energy", score: 0 },
+                    { text: "Wired but scattered", score: 2 },
+                    { text: "Anxious, jittery, heart racing", score: 3 }
+                ]
+            },
+            {
+                q: "How's your sleep?",
+                options: [
+                    { text: "I sleep great", score: 0 },
+                    { text: "Takes a while to fall asleep", score: 1 },
+                    { text: "Terrible. Always tired.", score: 3 }
+                ]
+            },
+            {
+                q: "If you skip coffee one day, what happens?",
+                options: [
+                    { text: "I'm fine", score: 0 },
+                    { text: "Mild headache, a bit foggy", score: 1 },
+                    { text: "Crushing headache, can't function", score: 3 }
+                ]
+            }
+        ];
+        
+        let current = 0;
+        let answers = [];
+        
+        function renderQuestion() {
+            const q = questions[current];
+            document.getElementById('quiz').innerHTML = `
+                <div class="quiz-card">
+                    <p class="question">
+                        <span class="question-number">Q${current + 1}.</span> ${q.q}
+                    </p>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option" onclick="selectOption(${i}, ${opt.score})">
+                                ${opt.text}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            document.getElementById('progress').style.width = `${(current / questions.length) * 100}%`;
+        }
+        
+        function selectOption(index, score) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(o => o.classList.remove('selected'));
+            options[index].classList.add('selected');
+            
+            answers.push(score);
+            
+            setTimeout(() => {
+                current++;
+                if (current < questions.length) {
+                    renderQuestion();
+                } else {
+                    showResults();
+                }
+            }, 300);
+        }
+        
+        function showResults() {
+            const total = answers.reduce((a, b) => a + b, 0);
+            const max = 17; // max possible score
+            const percent = Math.round((total / max) * 100);
+            
+            let verdict, verdictClass, circleClass, issues = [];
+            
+            if (percent >= 60) {
+                verdict = "Your Coffee is SABOTAGING You";
+                verdictClass = "bad";
+                circleClass = "";
+                issues = [
+                    "⚡ Cortisol spikes making you MORE stressed",
+                    "😴 Adenosine buildup causing afternoon crashes",
+                    "🔄 Dependency cycle requiring more caffeine for same effect",
+                    "🧠 Jitters stealing your ability to do deep work"
+                ];
+            } else if (percent >= 35) {
+                verdict = "Your Coffee Could Be Better";
+                verdictClass = "medium";
+                circleClass = "medium";
+                issues = [
+                    "⏰ Timing might be off (cortisol interference)",
+                    "📉 Afternoon energy dips suggest poor sustained release",
+                    "🎢 Energy rollercoaster instead of steady state"
+                ];
+            } else {
+                verdict = "Your Coffee Game is Solid";
+                verdictClass = "good";
+                circleClass = "good";
+                issues = [
+                    "✅ Good timing and moderation",
+                    "✅ Steady energy throughout the day"
+                ];
+            }
+            
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('progress').style.width = '100%';
+            
+            const resultsHTML = `
+                <div class="result-card">
+                    <div class="score-circle ${circleClass}">${percent}%</div>
+                    <h2 class="verdict ${verdictClass}">${verdict}</h2>
+                    <p style="color: #aaa;">Coffee Sabotage Score</p>
+                    
+                    <div class="issues-list">
+                        ${issues.map(issue => `
+                            <div class="issue">
+                                <span>${issue}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    ${percent >= 35 ? `
+                    <div class="solution-box">
+                        <p class="solution-title">💡 The Fix: Smarter Caffeine</p>
+                        <p>Regular coffee spikes and crashes. <strong>LOCK IN COFFEE</strong> combines caffeine with:</p>
+                        <ul style="text-align: left; margin: 10px 0; padding-left: 20px;">
+                            <li><strong>Lion's Mane</strong> — sustained focus, no jitters</li>
+                            <li><strong>L-Theanine</strong> — calm alertness</li>
+                            <li><strong>Cordyceps</strong> — steady energy release</li>
+                        </ul>
+                        <p style="color: #4ade80; margin-top: 10px;">Same caffeine. Completely different experience.</p>
+                    </div>
+                    
+                    <a href="https://zoneprojectz.github.io/lock-in-coffee/" class="cta-button">
+                        🔒 Try LOCK IN COFFEE →
+                    </a>
+                    ` : `
+                    <div class="solution-box">
+                        <p class="solution-title">💡 Level Up Anyway?</p>
+                        <p>Even with good habits, <strong>LOCK IN COFFEE</strong> adds cognitive benefits regular coffee can't provide.</p>
+                    </div>
+                    
+                    <a href="https://zoneprojectz.github.io/lock-in-coffee/" class="cta-button">
+                        🔒 Explore LOCK IN COFFEE →
+                    </a>
+                    `}
+                    
+                    <div class="share-section">
+                        <p style="margin-bottom: 15px; color: #888;">Challenge your friends:</p>
+                        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`My coffee sabotage score: ${percent}%\n\n${verdict}\n\nFind out if YOUR coffee is working against you:`)}&url=${encodeURIComponent('https://zoneprojectz.github.io/tzb-flow-guide/coffee-quiz.html')}" 
+                           target="_blank" class="share-button">
+                            𝕏 Share Result
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('results').innerHTML = resultsHTML;
+            document.getElementById('results').classList.remove('hidden');
+        }
+        
+        // Start quiz
+        renderQuestion();
+    </script>
+</body>
+</html>
