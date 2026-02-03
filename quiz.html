@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Focus Score | THE ZONE BIO</title>
+    <meta name="description" content="Take the Focus Score quiz and share your results!">
+    <meta property="og:title" content="What's Your Focus Score?">
+    <meta property="og:description" content="I just took the Focus Score quiz. Can you beat my score?">
+    <meta property="og:image" content="https://zoneprojectz.github.io/tzb-flow-guide/focus-og.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0a0a;
+            --card: #141414;
+            --accent: #22c55e;
+            --text: #fafafa;
+            --muted: #71717a;
+            --border: #27272a;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container { max-width: 500px; width: 100%; }
+        
+        .quiz-container { display: block; }
+        .result-container { display: none; }
+        
+        .quiz-container.hidden { display: none; }
+        .result-container.visible { display: block; }
+        
+        .brand {
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 32px;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: var(--card);
+            border-radius: 2px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .question-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .question-number {
+            color: var(--accent);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+        
+        .question-text {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 15px;
+            text-align: left;
+        }
+        
+        .option:hover {
+            border-color: var(--accent);
+            background: rgba(34, 197, 94, 0.05);
+        }
+        
+        .option.selected {
+            border-color: var(--accent);
+            background: rgba(34, 197, 94, 0.15);
+        }
+        
+        /* Results Card - Made for Screenshots */
+        .score-card {
+            background: linear-gradient(145deg, #141414, #1a1a1a);
+            border: 2px solid var(--accent);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .score-label {
+            font-size: 14px;
+            color: var(--muted);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        
+        .score-number {
+            font-size: 96px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .score-max {
+            font-size: 24px;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+        
+        .score-tier {
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid var(--accent);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        
+        .score-insight {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .watermark {
+            font-size: 12px;
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+        
+        .watermark a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 14px 24px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .share-hint {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        
+        .cta-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 32px;
+            text-align: center;
+        }
+        
+        .cta-box h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .cta-box p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="brand">THE ZONE BIO</div>
+        
+        <!-- Quiz Section -->
+        <div class="quiz-container" id="quizContainer">
+            <h1>Focus Score Quiz 🎯</h1>
+            <p class="subtitle">7 questions · 60 seconds</p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="question-card" id="questionCard">
+                <div class="question-number" id="questionNumber">Question 1 of 7</div>
+                <div class="question-text" id="questionText"></div>
+                <div class="options" id="options"></div>
+            </div>
+        </div>
+        
+        <!-- Result Section -->
+        <div class="result-container" id="resultContainer">
+            <div class="score-card" id="scoreCard">
+                <div class="score-label">YOUR FOCUS SCORE</div>
+                <div class="score-number" id="scoreNumber">0</div>
+                <div class="score-max">/ 100</div>
+                <div class="score-tier" id="scoreTier">CALCULATING...</div>
+                <p class="score-insight" id="scoreInsight"></p>
+                <div class="watermark">
+                    thezone.bio/quiz
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-primary" onclick="shareTwitter()">Share on X</button>
+                <button class="btn btn-secondary" onclick="copyLink()">Copy Link</button>
+                <button class="btn btn-secondary" onclick="retake()">Retake Quiz</button>
+            </div>
+            <p class="share-hint">📸 Screenshot your score card to share!</p>
+            
+            <div class="cta-box">
+                <h3>Want to improve your score?</h3>
+                <p>Get our free Flow State Guide with science-backed focus techniques.</p>
+                <a href="https://zoneprojectz.github.io/tzb-flow-guide/" class="btn btn-primary">Get the Guide →</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                q: "How often do you lose track of time while working on something you enjoy?",
+                options: ["Rarely or never", "Sometimes", "Often", "Almost always"],
+                scores: [0, 5, 10, 15]
+            },
+            {
+                q: "When you sit down to focus, how quickly can you get into deep work?",
+                options: ["Takes 30+ minutes", "15-30 minutes", "5-15 minutes", "Almost immediately"],
+                scores: [0, 5, 10, 15]
+            },
+            {
+                q: "How do you handle phone notifications while working?",
+                options: ["Check every notification", "Check periodically", "Phone on silent nearby", "Phone in another room"],
+                scores: [0, 5, 10, 15]
+            },
+            {
+                q: "How often do you complete your most important task for the day?",
+                options: ["Rarely", "Half the time", "Most days", "Almost every day"],
+                scores: [0, 5, 10, 15]
+            },
+            {
+                q: "What happens when you get interrupted during deep work?",
+                options: ["I stay distracted", "Takes 20+ min to recover", "Takes 5-10 min to recover", "I recover quickly"],
+                scores: [0, 5, 10, 15]
+            },
+            {
+                q: "How do you feel at the end of a typical workday?",
+                options: ["Exhausted & scattered", "Tired but okay", "Satisfied most days", "Energized & accomplished"],
+                scores: [0, 5, 10, 15]
+            },
+            {
+                q: "Do you have a consistent pre-work routine to get focused?",
+                options: ["No routine", "Inconsistent routine", "Regular routine", "Optimized ritual"],
+                scores: [0, 3, 7, 10]
+            }
+        ];
+
+        let currentQ = 0;
+        let answers = [];
+
+        function renderQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('questionNumber').textContent = `Question ${currentQ + 1} of ${questions.length}`;
+            document.getElementById('questionText').textContent = q.q;
+            document.getElementById('progressFill').style.width = `${(currentQ / questions.length) * 100}%`;
+            
+            const optionsHtml = q.options.map((opt, i) => 
+                `<button class="option" onclick="selectOption(${i})">${opt}</button>`
+            ).join('');
+            document.getElementById('options').innerHTML = optionsHtml;
+        }
+
+        function selectOption(index) {
+            answers.push(questions[currentQ].scores[index]);
+            currentQ++;
+            
+            if (currentQ >= questions.length) {
+                showResults();
+            } else {
+                renderQuestion();
+            }
+        }
+
+        function showResults() {
+            const totalScore = answers.reduce((a, b) => a + b, 0);
+            
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('resultContainer').classList.add('visible');
+            
+            // Animate score
+            let displayScore = 0;
+            const interval = setInterval(() => {
+                displayScore += 2;
+                if (displayScore >= totalScore) {
+                    displayScore = totalScore;
+                    clearInterval(interval);
+                }
+                document.getElementById('scoreNumber').textContent = displayScore;
+            }, 30);
+            
+            // Set tier
+            let tier, insight;
+            if (totalScore >= 85) {
+                tier = "🔥 FLOW MASTER";
+                insight = "You've mastered the art of deep focus. You're in the top 5% of focused workers. Keep optimizing!";
+            } else if (totalScore >= 65) {
+                tier = "⚡ FOCUSED";
+                insight = "Strong focus foundations. With a few tweaks to your environment and routine, you could reach flow state consistently.";
+            } else if (totalScore >= 45) {
+                tier = "🌱 DEVELOPING";
+                insight = "You have good focus potential but inconsistent conditions. The Flow State Guide can help you build reliable systems.";
+            } else {
+                tier = "🎯 BEGINNER";
+                insight = "Focus is a skill, and you're at the start of the journey. Small changes to your environment can make a huge difference.";
+            }
+            
+            document.getElementById('scoreTier').textContent = tier;
+            document.getElementById('scoreInsight').textContent = insight;
+            
+            // Save to URL for sharing
+            const url = new URL(window.location);
+            url.searchParams.set('score', totalScore);
+            window.history.replaceState({}, '', url);
+        }
+
+        function shareTwitter() {
+            const score = document.getElementById('scoreNumber').textContent;
+            const text = encodeURIComponent(`My Focus Score: ${score}/100 🎯\n\nCan you beat it? Take the quiz:`);
+            const url = encodeURIComponent('https://zoneprojectz.github.io/tzb-flow-guide/quiz.html');
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied! Share your score with friends.');
+        }
+
+        function retake() {
+            currentQ = 0;
+            answers = [];
+            document.getElementById('quizContainer').classList.remove('hidden');
+            document.getElementById('resultContainer').classList.remove('visible');
+            renderQuestion();
+        }
+
+        // Check for shared score
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('score')) {
+            const sharedScore = parseInt(params.get('score'));
+            document.getElementById('quizContainer').innerHTML = `
+                <h1>Someone scored ${sharedScore}/100! 🎯</h1>
+                <p class="subtitle">Can you beat their Focus Score?</p>
+                <button class="btn btn-primary" onclick="location.href=location.pathname" style="margin-top: 24px;">Take the Quiz</button>
+            `;
+        } else {
+            renderQuestion();
+        }
+    </script>
+</body>
+</html>
