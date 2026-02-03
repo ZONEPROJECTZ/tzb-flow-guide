@@ -167,11 +167,91 @@
             margin-bottom: 8px;
         }
         
-        .download-link {
+        /* Premium Upgrade Section */
+        .premium-section {
+            margin-top: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            text-align: center;
+        }
+        
+        .premium-badge {
             display: inline-block;
-            margin-top: 12px;
+            background: #d4af37;
+            color: #0a0f1a;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        
+        .premium-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+        
+        .premium-section p {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+        
+        .premium-features {
+            text-align: left;
+            margin-bottom: 24px;
+        }
+        
+        .premium-features li {
+            margin-bottom: 8px;
+            color: #c0c0c0;
+            list-style: none;
+        }
+        
+        .premium-features li::before {
+            content: "✓ ";
             color: #d4af37;
-            text-decoration: underline;
+            font-weight: bold;
+        }
+        
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 8px;
+        }
+        
+        .price-note {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .buy-button {
+            display: inline-block;
+            background: #d4af37;
+            color: #0a0f1a;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .buy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(212, 175, 55, 0.4);
+        }
+        
+        .guarantee {
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: #888;
         }
         
         .quote {
@@ -264,19 +344,44 @@
         </div>
         
         <div class="cta-section">
-            <form class="email-form" id="downloadForm">
-                <input type="email" class="email-input" placeholder="your@email.com" required id="emailInput">
+            <!-- Real email capture via Formsubmit.co -->
+            <form class="email-form" id="downloadForm" action="https://formsubmit.co/me@thezone.bio" method="POST">
+                <input type="hidden" name="_subject" value="🍄 New Flow Guide Signup!">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://zoneprojectz.github.io/tzb-flow-guide/thanks.html">
+                
+                <input type="email" name="email" class="email-input" placeholder="your@email.com" required id="emailInput">
                 <button type="submit" class="cta-button">
                     Get the Free Guide →
                 </button>
             </form>
             <p class="cta-note">We'll send the PDF to your inbox. No spam, ever.</p>
+        </div>
+        
+        <!-- Premium Upgrade Section -->
+        <div class="premium-section">
+            <span class="premium-badge">Complete Edition</span>
+            <h2>Want the Full System?</h2>
+            <p>The free guide covers the basics. The Complete Edition gives you everything to master flow state.</p>
             
-            <div class="success-message" id="successMessage">
-                <h3>✅ Check your inbox!</h3>
-                <p>The Flow State Guide is on its way to your email.</p>
-                <a href="#" class="download-link" id="directDownload">Or download directly here →</a>
-            </div>
+            <ul class="premium-features">
+                <li>Everything in the free guide</li>
+                <li>Advanced protocols for different work types</li>
+                <li>Flow state tracking templates (Notion + PDF)</li>
+                <li>Supplement timing calculator</li>
+                <li>90-day transformation roadmap</li>
+                <li>Private Telegram community access</li>
+            </ul>
+            
+            <div class="price">$9</div>
+            <div class="price-note">One-time payment • Instant PDF delivery</div>
+            
+            <a href="https://paypal.me/thezonebio/9" class="buy-button" target="_blank">
+                Get Complete Edition →
+            </a>
+            
+            <p class="guarantee">💯 100% satisfaction guarantee. Not useful? Full refund, no questions.</p>
         </div>
         
         <div class="quote">
@@ -289,27 +394,5 @@
             <div class="tagline">Focus is the new luxury.</div>
         </footer>
     </div>
-    
-    <script>
-        // Simple form handler - stores emails in localStorage for now
-        // Replace with actual form service (Formspree, ConvertKit, etc.)
-        document.getElementById('downloadForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('emailInput').value;
-            
-            // Store locally (for demo - replace with real service)
-            const emails = JSON.parse(localStorage.getItem('tzb_signups') || '[]');
-            emails.push({ email, date: new Date().toISOString() });
-            localStorage.setItem('tzb_signups', JSON.stringify(emails));
-            
-            // Show success
-            document.getElementById('downloadForm').style.display = 'none';
-            document.querySelector('.cta-note').style.display = 'none';
-            document.getElementById('successMessage').classList.add('show');
-            
-            // Console log for now - remove in production
-            console.log('Signup:', email);
-        });
-    </script>
 </body>
 </html>

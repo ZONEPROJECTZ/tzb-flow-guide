@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Your Inbox! | THE ZONE BIO</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 50%, #0d1117 100%);
+            color: #e6e6e6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: #22c55e;
+        }
+        
+        p {
+            color: #a0a0a0;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .note {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .note h3 {
+            color: #d4af37;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .note p {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37 0%, #b8942d 100%);
+            color: #0a0f1a;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .back-link {
+            display: block;
+            margin-top: 30px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .back-link:hover {
+            color: #d4af37;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✅</div>
+        <h1>You're In!</h1>
+        <p>The Flow State Guide is on its way to your inbox.<br>
+        Check your email (and spam folder, just in case).</p>
+        
+        <div class="note">
+            <h3>🍄 Want to go deeper?</h3>
+            <p>The Complete Edition includes advanced protocols, tracking templates, and private community access.</p>
+            <a href="https://paypal.me/thezonebio/9" class="cta-button" target="_blank">
+                Get Complete Edition — $9
+            </a>
+        </div>
+        
+        <a href="/" class="back-link">← Back to homepage</a>
+    </div>
+</body>
+</html>
