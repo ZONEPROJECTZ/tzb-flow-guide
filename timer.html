@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Timer | THE ZONE BIO</title>
+    <meta name="description" content="Free Pomodoro-style focus timer optimized for flow state. Track your deep work sessions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --card: #141414;
+            --accent: #22c55e;
+            --accent-dim: rgba(34, 197, 94, 0.15);
+            --text: #fafafa;
+            --muted: #71717a;
+            --border: #27272a;
+        }
+
+        body {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .brand {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 32px;
+        }
+
+        .timer-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px 32px;
+            margin-bottom: 24px;
+        }
+
+        .timer-display {
+            font-size: 80px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-display.active {
+            color: var(--accent);
+        }
+
+        .timer-display.break {
+            color: #f59e0b;
+        }
+
+        .session-label {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        button {
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 14px 28px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            background: #16a34a;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(34, 197, 94, 0.25);
+        }
+
+        .presets {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .preset {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .preset:hover, .preset.active {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .stat {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .promo {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 32px;
+        }
+
+        .promo h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .promo p {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .promo a {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .promo a:hover {
+            background: #16a34a;
+        }
+
+        .tips {
+            margin-top: 24px;
+            text-align: left;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .tips h4 {
+            font-size: 13px;
+            color: var(--accent);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tips ul {
+            list-style: none;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .tips li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .tips li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .notification-prompt {
+            display: none;
+            background: var(--card);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .notification-prompt button {
+            margin-top: 12px;
+            padding: 10px 20px;
+        }
+
+        footer {
+            margin-top: 48px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Breathing animation during break */
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.02); opacity: 1; }
+        }
+
+        .timer-card.breathing {
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        /* Sound toggle */
+        .sound-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .sound-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <button class="sound-toggle" id="soundToggle" title="Toggle sound">🔔</button>
+    
+    <div class="container">
+        <div class="brand">THE ZONE BIO</div>
+        <h1>Flow Timer ⏱️</h1>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="sessionsToday">0</div>
+                <div class="stat-label">Sessions</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="focusMinutes">0</div>
+                <div class="stat-label">Focus Min</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="streak">0</div>
+                <div class="stat-label">Day Streak</div>
+            </div>
+        </div>
+
+        <div class="presets">
+            <button class="preset" data-work="25" data-break="5">25/5</button>
+            <button class="preset active" data-work="50" data-break="10">50/10</button>
+            <button class="preset" data-work="90" data-break="20">90/20</button>
+        </div>
+
+        <div class="notification-prompt" id="notificationPrompt">
+            🔔 Enable notifications to know when your session ends
+            <button class="btn-secondary" onclick="requestNotifications()">Enable</button>
+        </div>
+
+        <div class="timer-card" id="timerCard">
+            <div class="timer-display" id="timerDisplay">50:00</div>
+            <div class="session-label" id="sessionLabel">Ready to focus</div>
+            <div class="controls">
+                <button class="btn-primary" id="startBtn">Start Focus</button>
+                <button class="btn-secondary" id="resetBtn">Reset</button>
+            </div>
+        </div>
+
+        <div class="tips">
+            <h4>Flow State Tips</h4>
+            <ul>
+                <li>Close all tabs except what you need</li>
+                <li>Phone on silent, face down</li>
+                <li>Clear your desk of distractions</li>
+                <li>Have water nearby (hydration = focus)</li>
+            </ul>
+        </div>
+
+        <div class="promo">
+            <h3>🍄 Struggling to stay focused?</h3>
+            <p>LOCK IN COFFEE combines Lion's Mane, Cordyceps, and L-Theanine for calm, sustained focus without the jitters.</p>
+            <a href="https://zoneprojectz.github.io/lock-in-coffee/">Learn More →</a>
+        </div>
+
+        <footer>
+            Free tool by <a href="https://thezone.bio">THE ZONE BIO</a> · 
+            <a href="https://zoneprojectz.github.io/tzb-flow-guide/">Get the Flow Guide</a>
+        </footer>
+    </div>
+
+    <script>
+        // State
+        let workMinutes = 50;
+        let breakMinutes = 10;
+        let timeLeft = workMinutes * 60;
+        let isRunning = false;
+        let isBreak = false;
+        let interval = null;
+        let soundEnabled = true;
+
+        // DOM
+        const display = document.getElementById('timerDisplay');
+        const label = document.getElementById('sessionLabel');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const timerCard = document.getElementById('timerCard');
+        const soundToggle = document.getElementById('soundToggle');
+        const notificationPrompt = document.getElementById('notificationPrompt');
+
+        // Stats from localStorage
+        let stats = JSON.parse(localStorage.getItem('flowTimerStats')) || {
+            sessions: 0,
+            focusMinutes: 0,
+            lastDate: null,
+            streak: 0
+        };
+
+        // Update streak
+        const today = new Date().toDateString();
+        if (stats.lastDate !== today) {
+            const yesterday = new Date(Date.now() - 86400000).toDateString();
+            if (stats.lastDate === yesterday) {
+                // Continue streak
+            } else if (stats.lastDate) {
+                stats.streak = 0; // Reset streak
+            }
+            // Reset daily sessions
+            stats.sessions = 0;
+            stats.focusMinutes = 0;
+        }
+        stats.lastDate = today;
+        updateStatsDisplay();
+
+        // Check notification permission
+        if ('Notification' in window && Notification.permission === 'default') {
+            notificationPrompt.style.display = 'block';
+        }
+
+        function requestNotifications() {
+            Notification.requestPermission().then(perm => {
+                notificationPrompt.style.display = 'none';
+            });
+        }
+
+        // Presets
+        document.querySelectorAll('.preset').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (isRunning) return;
+                document.querySelectorAll('.preset').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                workMinutes = parseInt(btn.dataset.work);
+                breakMinutes = parseInt(btn.dataset.break);
+                timeLeft = workMinutes * 60;
+                updateDisplay();
+            });
+        });
+
+        // Sound toggle
+        soundToggle.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            soundToggle.textContent = soundEnabled ? '🔔' : '🔕';
+        });
+
+        // Timer functions
+        function updateDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            display.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            
+            // Update page title
+            document.title = `${display.textContent} | Flow Timer`;
+        }
+
+        function playSound() {
+            if (!soundEnabled) return;
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = 800;
+            osc.type = 'sine';
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.5);
+        }
+
+        function showNotification(title, body) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification(title, { body, icon: '🍄' });
+            }
+        }
+
+        function startTimer() {
+            if (isRunning) {
+                // Pause
+                clearInterval(interval);
+                isRunning = false;
+                startBtn.textContent = isBreak ? 'Resume Break' : 'Resume Focus';
+                return;
+            }
+
+            isRunning = true;
+            startBtn.textContent = 'Pause';
+            display.classList.add(isBreak ? 'break' : 'active');
+            label.textContent = isBreak ? 'Break time - breathe' : 'Deep focus mode';
+            
+            if (isBreak) {
+                timerCard.classList.add('breathing');
+            }
+
+            interval = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    isRunning = false;
+                    playSound();
+
+                    if (isBreak) {
+                        // Break finished, start new work session
+                        isBreak = false;
+                        timeLeft = workMinutes * 60;
+                        display.classList.remove('break');
+                        timerCard.classList.remove('breathing');
+                        label.textContent = 'Ready for next session';
+                        startBtn.textContent = 'Start Focus';
+                        showNotification('Break Over! 💪', 'Time to lock in again.');
+                    } else {
+                        // Work finished, start break
+                        stats.sessions++;
+                        stats.focusMinutes += workMinutes;
+                        stats.streak = Math.max(stats.streak, 1);
+                        localStorage.setItem('flowTimerStats', JSON.stringify(stats));
+                        updateStatsDisplay();
+
+                        isBreak = true;
+                        timeLeft = breakMinutes * 60;
+                        display.classList.remove('active');
+                        label.textContent = 'Session complete! Take a break.';
+                        startBtn.textContent = 'Start Break';
+                        showNotification('Session Complete! 🎉', `You focused for ${workMinutes} minutes. Time for a ${breakMinutes} minute break.`);
+                    }
+                    updateDisplay();
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(interval);
+            isRunning = false;
+            isBreak = false;
+            timeLeft = workMinutes * 60;
+            display.classList.remove('active', 'break');
+            timerCard.classList.remove('breathing');
+            label.textContent = 'Ready to focus';
+            startBtn.textContent = 'Start Focus';
+            updateDisplay();
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById('sessionsToday').textContent = stats.sessions;
+            document.getElementById('focusMinutes').textContent = stats.focusMinutes;
+            document.getElementById('streak').textContent = stats.streak;
+        }
+
+        startBtn.addEventListener('click', startTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                startTimer();
+            } else if (e.code === 'KeyR') {
+                resetTimer();
+            }
+        });
+
+        updateDisplay();
+    </script>
+</body>
+</html>
