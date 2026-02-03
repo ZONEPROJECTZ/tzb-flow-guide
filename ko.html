@@ -1,31 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Science of Flow State | Free Guide</title>
-    <meta name="description" content="Master the 4 conditions for effortless focus. Free PDF guide from THE ZONE BIO.">
+    <title>플로우 스테이트 가이드 | 몰입의 과학</title>
+    <meta name="description" content="의지력 없이 집중하는 4가지 조건. THE ZONE BIO 무료 PDF 가이드.">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="The Science of Flow State | Free Guide">
-    <meta property="og:description" content="Master the 4 conditions for effortless focus. No willpower required.">
+    <meta property="og:title" content="플로우 스테이트 가이드 | 몰입의 과학">
+    <meta property="og:description" content="의지력 없이 집중하는 4가지 조건을 배우세요.">
     <meta property="og:type" content="website">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
             background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 50%, #0d1117 100%);
             color: #e6e6e6;
             min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.8;
         }
         
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 40px 20px;
+        }
+        
+        .lang-switch {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .lang-switch a {
+            color: #888;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 6px 12px;
+            border: 1px solid #333;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+        
+        .lang-switch a:hover {
+            color: #d4af37;
+            border-color: #d4af37;
         }
         
         .badge {
@@ -37,14 +57,13 @@
             font-size: 12px;
             font-weight: 600;
             letter-spacing: 1px;
-            text-transform: uppercase;
             margin-bottom: 20px;
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             font-weight: 700;
-            line-height: 1.2;
+            line-height: 1.3;
             margin-bottom: 20px;
         }
         
@@ -53,9 +72,26 @@
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: #a0a0a0;
             margin-bottom: 40px;
+        }
+        
+        .hook-box {
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 3px solid #d4af37;
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .hook-box p {
+            font-size: 1.05rem;
+            color: #c0c0c0;
+        }
+        
+        .hook-box strong {
+            color: #d4af37;
         }
         
         .features {
@@ -69,7 +105,7 @@
         .feature {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         
         .feature:last-child { margin-bottom: 0; }
@@ -83,7 +119,7 @@
         .feature-text h3 {
             font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         
         .feature-text p {
@@ -149,25 +185,7 @@
             color: #666;
         }
         
-        .success-message {
-            display: none;
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        
-        .success-message.show {
-            display: block;
-        }
-        
-        .success-message h3 {
-            color: #22c55e;
-            margin-bottom: 8px;
-        }
-        
-        /* Premium Upgrade Section */
+        /* Premium Section */
         .premium-section {
             margin-top: 50px;
             padding: 30px;
@@ -186,16 +204,15 @@
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 1px;
-            text-transform: uppercase;
             margin-bottom: 16px;
         }
         
         .premium-section h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 12px;
         }
         
-        .premium-section p {
+        .premium-section > p {
             color: #a0a0a0;
             margin-bottom: 20px;
         }
@@ -203,10 +220,11 @@
         .premium-features {
             text-align: left;
             margin-bottom: 24px;
+            padding-left: 10px;
         }
         
         .premium-features li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             color: #c0c0c0;
             list-style: none;
         }
@@ -221,7 +239,12 @@
             font-size: 2rem;
             font-weight: 700;
             color: #d4af37;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
+        }
+        
+        .price-sub {
+            font-size: 1rem;
+            color: #888;
         }
         
         .price-note {
@@ -263,7 +286,6 @@
         
         .quote p {
             font-size: 1.1rem;
-            font-style: italic;
             color: #c0c0c0;
         }
         
@@ -296,105 +318,114 @@
         }
         
         @media (max-width: 480px) {
-            h1 { font-size: 2rem; }
+            h1 { font-size: 1.9rem; }
             .container { padding: 30px 16px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div style="text-align: right; margin-bottom: 20px;">
-            <a href="ko.html" style="color: #888; text-decoration: none; font-size: 14px; padding: 6px 12px; border: 1px solid #333; border-radius: 20px; transition: all 0.2s;">한국어</a>
+        <div class="lang-switch">
+            <a href="index.html">English</a>
         </div>
-        <span class="badge">Free PDF Guide</span>
         
-        <h1>The Science of <span>Flow State</span></h1>
+        <span class="badge">무료 PDF 가이드</span>
         
-        <p class="subtitle">Master the 4 conditions for effortless focus. No willpower required.</p>
+        <h1><span>몰입</span>은 의지력이 아니라<br>조건입니다</h1>
+        
+        <p class="subtitle">4가지 조건만 맞추면 누구나 깊은 집중에 들어갈 수 있습니다.</p>
+        
+        <div class="hook-box">
+            <p>"왜 나만 집중이 안 될까?"<br>
+            "의지력이 부족한 건가?"<br><br>
+            문제는 당신이 아닙니다.<br>
+            <strong>조건</strong>이 안 맞는 거예요.</p>
+        </div>
         
         <div class="features">
             <div class="feature">
                 <span class="feature-icon">🧠</span>
                 <div class="feature-text">
-                    <h3>The 4 Conditions for Flow</h3>
-                    <p>Based on decades of research by Csikszentmihalyi</p>
+                    <h3>몰입의 4가지 조건</h3>
+                    <p>칙센트미하이 교수의 수십 년 연구 기반</p>
                 </div>
             </div>
             
             <div class="feature">
                 <span class="feature-icon">⏰</span>
                 <div class="feature-text">
-                    <h3>90-Minute Deep Work Protocol</h3>
-                    <p>Step-by-step framework for maximum focus</p>
+                    <h3>90분 딥워크 프로토콜</h3>
+                    <p>단계별 최대 집중 프레임워크</p>
                 </div>
             </div>
             
             <div class="feature">
                 <span class="feature-icon">🍄</span>
                 <div class="feature-text">
-                    <h3>Nutrition for Focus</h3>
-                    <p>Lion's Mane, L-Theanine, and timing strategies</p>
+                    <h3>집중을 위한 영양</h3>
+                    <p>노루궁뎅이버섯, L-테아닌, 타이밍 전략</p>
                 </div>
             </div>
             
             <div class="feature">
                 <span class="feature-icon">📅</span>
                 <div class="feature-text">
-                    <h3>30-Day Flow Challenge</h3>
-                    <p>Build lasting habits, not temporary motivation</p>
+                    <h3>30일 몰입 챌린지</h3>
+                    <p>일시적 동기부여가 아닌 지속되는 습관</p>
                 </div>
             </div>
         </div>
         
         <div class="cta-section">
-            <!-- Real email capture via Formsubmit.co -->
-            <form class="email-form" id="downloadForm" action="https://formsubmit.co/me@thezone.bio" method="POST">
-                <input type="hidden" name="_subject" value="🍄 New Flow Guide Signup!">
+            <form class="email-form" action="https://formsubmit.co/me@thezone.bio" method="POST">
+                <input type="hidden" name="_subject" value="🍄 새 가이드 신청! (한국)">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_next" value="https://zoneprojectz.github.io/tzb-flow-guide/thanks.html">
+                <input type="hidden" name="_next" value="https://zoneprojectz.github.io/tzb-flow-guide/thanks-ko.html">
+                <input type="hidden" name="source" value="korean-landing">
                 
-                <input type="email" name="email" class="email-input" placeholder="your@email.com" required id="emailInput">
+                <input type="email" name="email" class="email-input" placeholder="이메일을 입력하세요" required>
                 <button type="submit" class="cta-button">
-                    Get the Free Guide →
+                    무료 가이드 받기 →
                 </button>
             </form>
-            <p class="cta-note">We'll send the PDF to your inbox. No spam, ever.</p>
+            <p class="cta-note">이메일로 PDF를 보내드립니다. 스팸 없음.</p>
         </div>
         
-        <!-- Premium Upgrade Section -->
+        <!-- Premium Section -->
         <div class="premium-section">
-            <span class="premium-badge">Complete Edition</span>
-            <h2>Want the Full System?</h2>
-            <p>The free guide covers the basics. The Complete Edition gives you everything to master flow state.</p>
+            <span class="premium-badge">완전판</span>
+            <h2>전체 시스템이 필요하신가요?</h2>
+            <p>무료 가이드는 기본만 다룹니다. 완전판은 몰입을 마스터하는 모든 것을 담고 있습니다.</p>
             
             <ul class="premium-features">
-                <li>Everything in the free guide</li>
-                <li>Advanced protocols for different work types</li>
-                <li>Flow state tracking templates (Notion + PDF)</li>
-                <li>Supplement timing calculator</li>
-                <li>90-day transformation roadmap</li>
-                <li>Private Telegram community access</li>
+                <li>무료 가이드 전체 내용 포함</li>
+                <li>작업 유형별 고급 프로토콜</li>
+                <li>몰입 트래킹 템플릿 (Notion + PDF)</li>
+                <li>보충제 타이밍 계산기</li>
+                <li>90일 변화 로드맵</li>
+                <li>텔레그램 커뮤니티 접근</li>
             </ul>
             
-            <div class="price">$9</div>
-            <div class="price-note">One-time payment • Instant PDF delivery</div>
+            <div class="price">₩12,000 <span class="price-sub">($9)</span></div>
+            <div class="price-note">일회성 결제 • 즉시 PDF 전송</div>
             
             <a href="https://paypal.me/thezonebio/9" class="buy-button" target="_blank">
-                Get Complete Edition →
+                완전판 구매하기 →
             </a>
             
-            <p class="guarantee">💯 100% satisfaction guarantee. Not useful? Full refund, no questions.</p>
+            <p class="guarantee">💯 100% 만족 보장. 도움이 안 되면 전액 환불.</p>
         </div>
         
         <div class="quote">
-            <p>"Flow is not about trying harder. It's about creating the conditions where effort becomes effortless."</p>
+            <p>"몰입은 더 열심히 하는 게 아닙니다.<br>노력이 저절로 되는 조건을 만드는 겁니다."</p>
             <cite>— THE ZONE BIO</cite>
         </div>
         
         <footer>
             <div class="logo">THE ZONE BIO</div>
             <div class="tagline">Focus is the new luxury.</div>
+            <div class="tagline" style="margin-top: 4px;">시스템에 의한 몰입</div>
         </footer>
     </div>
 </body>
